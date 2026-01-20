@@ -1,0 +1,32 @@
+{
+  "logEverything": true,
+  "logFile": true,
+  "serverPort": 5042,
+  "MatchSettings": {
+    "DefaultsMatchSettings": {
+      "DefaultHP": 1000,
+      "DefaultDamage": 10,
+      "DefaultArmor": 0,
+      "MissChancePercentage": 0,
+      "CritChancePercentage": 0,
+      "CancelMatchForAFKTimeMinute": 5,
+      "MaxDuration": -1
+    }
+  },
+  "OverlaySettings": {
+    "DefaultImages": {
+      "DefaultProfileIcon": "https://www.shutterstock.com/image-vector/default-avatar-social-media-display-600nw-2632690107.jpg",
+      "DefaultArmorIcon": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/weapon_slots.png",
+      "DefaultWeaponIcon": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/armor_slot.png"
+    },
+    "HexColorLifebar": "FFFF00",
+    "RefreshRateSeconds": 0.1
+  },
+  "CommandSettings": {
+    "DuelRequest": {
+      "Request": "!duel {name}",
+      "Deny": "!duel-deny {name}",
+      "Accept": "!duel-accept {name}"
+    }
+  }
+}

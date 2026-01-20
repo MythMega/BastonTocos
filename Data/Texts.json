@@ -1,0 +1,13 @@
+﻿{
+  "Match": {
+    "MatchStarted": "Un Match a été lancé entre ces deux viewers : {v1} & {v2}.",
+    "DuelRequest": "Demande de duel envoyée par {v1}. {v2}, fais {cmdAccept} pour accepter, ou {cmdDeny} pour refuser.",
+    "DuelRequestAccepted": "{v1} a accepté le duel contre {v2}. Au combat !",
+    "DuelRequestDenied": "{v1} a refusé le duel contre {v2}. Demande supprimée.",
+    "MatchAlreadyStarted": "Il y a déjà un match en cours. Demande annulée.",
+    "EquipementObtained": "Tu as loot l'{itemType} suivante : {itemName} - {itemAtkStat}↑ / {itemDefStat}Θ.",
+    "EquipmentAutomaticallyEquiped": "(Automatiquement équipé).",
+    "LootCard": "Carte obtenue : [{cardRarityStars}] {CardName}.",
+    "LootGarbage": "Tu as obtenu le dechet suivant : {itemName}"
+  }
+}
