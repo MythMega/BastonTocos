@@ -43,11 +43,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\Match\Attack.cs" />
+    <Compile Include="Business\Match\Loot.cs" />
+    <Compile Include="Business\Match\Match.cs" />
+    <Compile Include="Controller\Match\AssautController.cs" />
+    <Compile Include="Controller\Match\DuelRequestController.cs" />
+    <Compile Include="Controller\User\UserController.cs" />
+    <Compile Include="Entity\Admin\EnvItem.cs" />
+    <Compile Include="Entity\Admin\SettingsItem.cs" />
+    <Compile Include="Entity\Match\AssautItem.cs" />
+    <Compile Include="Entity\Match\DuelItem.cs" />
+    <Compile Include="Entity\Match\MatchItem.cs" />
+    <Compile Include="Entity\RequestItem.cs" />
+    <Compile Include="Entity\User\UserItem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Data\Settings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Texts.json" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

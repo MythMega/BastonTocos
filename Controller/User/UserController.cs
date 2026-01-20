@@ -5,9 +5,9 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bastocos.Controller.Match
+namespace Bastocos.Controller.User
 {
-    internal class AssautController
+    internal class UserController
     {
         internal void Handle(HttpListenerContext context)
         {
