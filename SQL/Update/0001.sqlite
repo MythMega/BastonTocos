@@ -1,0 +1,60 @@
+CREATE TABLE IF NOT EXISTS User (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Username TEXT NOT NULL,
+    FirstLogin DATETIME DEFAULT CURRENT_TIMESTAMP,
+    LastLogin DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS UserStats (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    VictoryCount INTEGER DEFAULT 0,
+    DefeatCount INTEGER DEFAULT 0,
+    DrawCount INTEGER DEFAULT 0,
+    AfkCount INTEGER DEFAULT 0,
+    AttackCount INTEGER DEFAULT 0,
+    LootedCount INTEGER DEFAULT 0,
+    Money INTEGER DEFAULT 0,
+    MaxDamageSingleHitDuel INTEGER DEFAULT 0,
+    MaxDamageSingleHitAssault INTEGER DEFAULT 0,
+    MaxDamageDuel INTEGER DEFAULT 0,
+    MaxDamageAssault INTEGER DEFAULT 0,
+    TotalDamage INTEGER DEFAULT 0,
+    FirstDuelDate DATETIME NULL,
+    PurchaseCount INTEGER DEFAULT 0,
+    MoneySpent INTEGER DEFAULT 0,
+    SaleCount INTEGER DEFAULT 0,
+    MoneyEarned INTEGER DEFAULT 0,
+    CardsLooted INTEGER DEFAULT 0,
+    CardsSold INTEGER DEFAULT 0,
+    ActiveDays INTEGER DEFAULT 0,
+    AssaultsLaunched INTEGER DEFAULT 0,
+    AssaultsResurrected INTEGER DEFAULT 0,
+    DuelParticipationCount INTEGER DEFAULT 0,
+    AssaultVictoryCount INTEGER DEFAULT 0,
+    AssaultDefeatCount INTEGER DEFAULT 0,
+    AssaultDrawCount INTEGER DEFAULT 0,
+    AssaultAfkCount INTEGER DEFAULT 0,
+    DuelVictoryCount INTEGER DEFAULT 0,
+    DuelDefeatCount INTEGER DEFAULT 0,
+    DuelDrawCount INTEGER DEFAULT 0,
+    DuelAfkCount INTEGER DEFAULT 0,
+    TotalCommandCount INTEGER DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS ItemsStorage (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Item TEXT NOT NULL,
+    Count INTEGER DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS CardsStorage (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Item TEXT NOT NULL,
+    Count INTEGER DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS DataSettings (
+    DatabaseVersion INTEGER DEFAULT 1,
+    DatabaseLastUpdate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    AppVersion INTEGER
+);

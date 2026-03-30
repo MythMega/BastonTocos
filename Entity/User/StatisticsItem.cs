@@ -12,40 +12,40 @@ namespace Bastocos.Entity.User
     public class StatisticsItem
     {
         /// <summary>Total number of victories (all modes combined).</summary>
-        public int VictoryCount { get; set; }
+        public int VictoryCount { get; set; } = 0;
 
         /// <summary>Total number of defeats (all modes combined).</summary>
-        public int DefeatCount { get; set; }
+        public int DefeatCount { get; set; } = 0;
 
         /// <summary>Total number of draws (all modes combined).</summary>
-        public int DrawCount { get; set; }
+        public int DrawCount { get; set; } = 0;
 
         /// <summary>Total number of AFK occurrences (all modes combined).</summary>
-        public int AfkCount { get; set; }
+        public int AfkCount { get; set; } = 0;
 
         /// <summary>Total number of attacks performed.</summary>
-        public int AttackCount { get; set; }
+        public int AttackCount { get; set; } = 0;
 
         /// <summary>Total number of times the player has been looted.</summary>
-        public int LootedCount { get; set; }
+        public int LootedCount { get; set; } = 0;
 
         /// <summary>Total amount of money currently owned.</summary>
-        public int Money { get; set; }
+        public int Money { get; set; } = 0;
 
         /// <summary>Maximum damage dealt in a single hit during a duel.</summary>
-        public int MaxDamageSingleHitDuel { get; set; }
+        public int MaxDamageSingleHitDuel { get; set; } = 0;
 
         /// <summary>Maximum damage dealt in a single hit during an assault.</summary>
-        public int MaxDamageSingleHitAssault { get; set; }
+        public int MaxDamageSingleHitAssault { get; set; } = 0;
 
         /// <summary>Maximum total damage dealt in a single duel.</summary>
-        public int MaxDamageDuel { get; set; }
+        public int MaxDamageDuel { get; set; } = 0;
 
         /// <summary>Maximum total damage dealt in a single assault.</summary>
-        public int MaxDamageAssault { get; set; }
+        public int MaxDamageAssault { get; set; } = 0;
 
         /// <summary>Total accumulated damage across all fights.</summary>
-        public int TotalDamage { get; set; }
+        public int TotalDamage { get; set; } = 0;
 
         /// <summary>Date of the player's first duel.</summary>
         public DateTime? FirstDuelDate { get; set; }
@@ -53,73 +53,74 @@ namespace Bastocos.Entity.User
         // --- Economy ---
 
         /// <summary>Total number of purchases made (1 item per purchase).</summary>
-        public int PurchaseCount { get; set; }
+        public int PurchaseCount { get; set; } = 0;
 
         /// <summary>Total amount of money spent.</summary>
-        public int MoneySpent { get; set; }
+        public int MoneySpent { get; set; } = 0;
 
         /// <summary>Total number of sales made.</summary>
-        public int SaleCount { get; set; }
+        public int SaleCount { get; set; } = 0;
 
         /// <summary>Total amount of money earned from sales.</summary>
-        public int MoneyEarned { get; set; }
+        public int MoneyEarned { get; set; } = 0;
 
         // --- Cards / Cardex ---
 
         /// <summary>Total number of cards looted.</summary>
-        public int CardsLooted { get; set; }
+        public int CardsLooted { get; set; } = 0;
 
         /// <summary>Total number of cards sold.</summary>
-        public int CardsSold { get; set; }
+        public int CardsSold { get; set; } = 0;
 
         /// <summary>Percentage of cardex completion (0 to 100).</summary>
-        public float CardexProgress { get; set; }
+        /// Needs to be calculated before usage
+        public float CardexProgress { get; set; } = 0;
 
         // --- Activity ---
 
         /// <summary>Total number of active days.</summary>
-        public int ActiveDays { get; set; }
+        public int ActiveDays { get; set; } = 0;
 
         /// <summary>Total number of assaults launched.</summary>
-        public int AssaultsLaunched { get; set; }
+        public int AssaultsLaunched { get; set; } = 0;
 
         /// <summary>Total number of assaults revived/resurrected.</summary>
-        public int AssaultsResurrected { get; set; }
+        public int AssaultsResurrected { get; set; } = 0;
 
         /// <summary>Total number of duel participations.</summary>
-        public int DuelParticipationCount { get; set; }
+        public int DuelParticipationCount { get; set; } = 0;
 
         // --- Assault Stats ---
 
         /// <summary>Total number of victories in assault mode.</summary>
-        public int AssaultVictoryCount { get; set; }
+        public int AssaultVictoryCount { get; set; } = 0;
 
         /// <summary>Total number of defeats in assault mode.</summary>
-        public int AssaultDefeatCount { get; set; }
+        public int AssaultDefeatCount { get; set; } = 0;
 
         /// <summary>Total number of draws in assault mode.</summary>
-        public int AssaultDrawCount { get; set; }
+        public int AssaultDrawCount { get; set; } = 0;
 
         /// <summary>Total number of AFK occurrences in assault mode.</summary>
-        public int AssaultAfkCount { get; set; }
+        public int AssaultAfkCount { get; set; } = 0;
 
         // --- Duel Stats ---
 
         /// <summary>Total number of victories in duel mode.</summary>
-        public int DuelVictoryCount { get; set; }
+        public int DuelVictoryCount { get; set; } = 0;
 
         /// <summary>Total number of defeats in duel mode.</summary>
-        public int DuelDefeatCount { get; set; }
+        public int DuelDefeatCount { get; set; } = 0;
 
         /// <summary>Total number of draws in duel mode.</summary>
-        public int DuelDrawCount { get; set; }
+        public int DuelDrawCount { get; set; } = 0;
 
         /// <summary>Total number of AFK occurrences in duel mode.</summary>
-        public int DuelAfkCount { get; set; }
+        public int DuelAfkCount { get; set; } = 0;
 
         // --- Misc ---
 
         /// <summary>Total number of commands executed.</summary>
-        public int TotalCommandCount { get; set; }
+        public int TotalCommandCount { get; set; } = 0;
     }
 }
