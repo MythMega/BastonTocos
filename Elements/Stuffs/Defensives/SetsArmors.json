@@ -1,0 +1,44 @@
+[
+  {
+    "Name": "Armure en Diam's",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/armor/diamondarmor.png",
+    "Rarity": "Rare",
+    "Enabled": true,
+    "Description": "Une armure brillante et solide, taill�e dans le m�me mat�riau que l'�p�e en Diam's.",
+    "SellValue": 15,
+    "BuyValue": 150,
+    "LootChance": 4,
+    "Attack": 0,
+    "Defense": 15,
+    "PossibleModifiers": [],
+    "ForcedModifer": "Sharpness"
+  },
+  {
+    "Name": "Armure du Vent",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/armor/windarmor.png",
+    "Rarity": "Rare",
+    "Enabled": true,
+    "Description": "L�g�re comme l'air, elle accompagne parfaitement le Sabre du Vent.",
+    "SellValue": 18,
+    "BuyValue": 180,
+    "LootChance": 5,
+    "Attack": 0,
+    "Defense": 14,
+    "PossibleModifiers": [],
+    "ForcedModifer": "Inertia"
+  },
+  {
+    "Name": "Blouse du Docteur Fou",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/armor/maddoctorcoat.png",
+    "Rarity": "Rare",
+    "Enabled": true,
+    "Description": "Une blouse tach�e de substances douteuses, impr�gn�e d'une �nergie malsaine.",
+    "SellValue": 11,
+    "BuyValue": 110,
+    "LootChance": 4,
+    "Attack": 0,
+    "Defense": 5,
+    "PossibleModifiers": [],
+    "ForcedModifer": "Lifesteal"
+  }
+]

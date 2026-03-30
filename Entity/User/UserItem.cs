@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Bastocos.Entity.User
 {
-    internal class UserItem
+    public class UserItem
     {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public StatisticsItem StatisticsItem { get; set; }
+        public LoginStatsItem LoginStatsItem { get; set; }
     }
 }

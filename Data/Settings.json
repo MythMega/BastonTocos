@@ -13,6 +13,18 @@
       "MaxDuration": -1
     }
   },
+  "LootRatesPercentages": {
+    "Trash": 60,
+    "Equipments": 30,
+    "Cards": 10
+  },
+  "ModifierRate": {
+    "Common": 0,
+    "Uncommon": 10,
+    "Rare": 20,
+    "Epic": 50,
+    "Legendary": 100
+  },
   "OverlaySettings": {
     "DefaultImages": {
       "DefaultProfileIcon": "https://www.shutterstock.com/image-vector/default-avatar-social-media-display-600nw-2632690107.jpg",
