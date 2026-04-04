@@ -1,10 +1,10 @@
 [
   {
-    "Name": "Épée en Diam's",
+    "Name": "Ã‰pÃ©e en Diam's",
     "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/weapon/diamondword.png",
     "Rarity": "Rare",
     "Enabled": true,
-    "Description": "Une épée qui fait autant de dommage qu'elle n'a de pixels.",
+    "Description": "Une Ã©pÃ©e qui fait autant de dommage qu'elle n'a de pixels.",
     "SellValue": 15,
     "BuyValue": 150,
     "LootChance": 4,
@@ -18,7 +18,7 @@
     "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/weapon/windsabre.png",
     "Rarity": "Rare",
     "Enabled": true,
-    "Description": "Une lame légère qui semble vibrer à chaque mouvement.",
+    "Description": "Une lame lÃ©gÃ¨re qui semble vibrer Ã  chaque mouvement.",
     "SellValue": 18,
     "BuyValue": 180,
     "LootChance": 5,

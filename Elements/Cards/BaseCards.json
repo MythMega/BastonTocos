@@ -1,10 +1,10 @@
 [
   {
-    "Name": "Bloc de béton",
+    "Name": "Bloc de bÃ©ton",
     "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/card/set1/beton.png",
     "Rarity": "Common",
     "Enabled": true,
-    "Description": "Un bloc de béton. Fallait en faire une carte pour que ça serve.",
+    "Description": "Un bloc de bÃ©ton. Fallait en faire une carte pour que Ã§a serve.",
     "SellValue": 2,
     "BuyValue": 300,
     "LootChance": 10
@@ -24,7 +24,7 @@
     "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/card/set1/doublesix.png",
     "Rarity": "Uncommon",
     "Enabled": true,
-    "Description": "Un lancé de dé qui fait plaisir, dommage que dans un jeu de carte on s'en foute des dés.",
+    "Description": "Un lancer de dÃ© qui fait plaisir, dommage que dans un jeu de carte on s'en foute des dÃ©s.",
     "SellValue": 3,
     "BuyValue": 500,
     "LootChance": 8
@@ -40,11 +40,11 @@
     "LootChance": 8
   },
   {
-    "Name": "Pheki et sa famille... Étrange.",
+    "Name": "Pheki et sa famille... Ã©trange.",
     "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/card/set1/phekifamille.png",
     "Rarity": "Rare",
     "Enabled": true,
-    "Description": "Un arbre généalogique qui tourne en rond.",
+    "Description": "Un arbre gÃ©nÃ©alogique qui tourne en rond.",
     "SellValue": 5,
     "BuyValue": 750,
     "LootChance": 5
@@ -74,7 +74,7 @@
     "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/card/set1/zisfire.png",
     "Rarity": "Legendary",
     "Enabled": true,
-    "Description": "Zisfire est humble, alors il n'a fait qu'une seule carte à son effigie.",
+    "Description": "Zisfire est humble, alors il n'a fait qu'une seule carte Ã  son effigie.",
     "SellValue": 10,
     "BuyValue": 2500,
     "LootChance": 1
