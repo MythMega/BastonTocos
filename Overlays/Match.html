@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Interface de combat</title>
+    <style>
+        :root {
+            --bg: #0f1724;
+            --panel: #0b1220;
+            --text: #e6eef8;
+            --gold: #d4af37;
+            --hp-red: #b71c1c;
+            --hp-red-dark: #7a0f0f;
+            --bar-height: 18px;
+            --transition-time: 600ms;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(180deg,#071021 0%, #081426 100%);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Container */
+        .app {
+            max-width: 1200px;
+            margin: 18px auto;
+            padding: 18px;
+            box-sizing: border-box;
+            background: rgba(255,255,255,0.02);
+            border-radius: 10px;
+            box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+        }
+
+        /* Canvas controls */
+        .canvas-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+            .canvas-controls label {
+                font-size: 13px;
+                color: #bcd3f0
+            }
+
+            .canvas-controls input[type="number"] {
+                width: 90px;
+                padding: 6px 8px;
+                border-radius: 6px;
+                border: 1px solid rgba(255,255,255,0.06);
+                background: rgba(255,255,255,0.02);
+                color: var(--text);
+            }
+
+        .canvas-wrap {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        #battleCanvas {
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        /* RemainingTime bar (top) */
+        .remaining-wrap {
+            width: 100%;
+            height: 28px;
+            margin: 8px 0 18px 0;
+            display: block;
+        }
+
+        .remaining-bar {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+            border-radius: 8px;
+            padding: 4px;
+            box-sizing: border-box;
+            border: 1px solid rgba(0,0,0,0.3);
+        }
+
+        .remaining-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 6px;
+            transition: width var(--transition-time) ease, background-color var(--transition-time) ease;
+            background: linear-gradient(90deg,#2ecc71,#27ae60);
+        }
+
+        /* Layout columns */
+        .columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 18px;
+            align-items: start;
+        }
+
+        .column {
+            background: transparent;
+            min-height: 360px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Left alignment / right alignment */
+        .left {
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .center {
+            align-items: center;
+            text-align: center;
+        }
+
+        .right {
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .pseudo {
+            font-weight: 700;
+            font-size: 18px;
+            color: #eaf4ff;
+            letter-spacing: 0.4px;
+        }
+
+        .portrait-frame {
+            width: 256px;
+            height: 256px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+            border: 2px solid rgba(255,255,255,0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .portrait-frame img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+        .small-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .small-frame {
+            width: 64px;
+            height: 64px;
+            border-radius: 6px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .small-frame img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+        /* HP bar with gold border */
+        .hp-wrap {
+            width: 256px;
+            height: 34px;
+            border-radius: 8px;
+            box-sizing: border-box;
+            border: 3px solid var(--gold);
+            background: rgba(0,0,0,0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hp-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0%;
+            background: linear-gradient(90deg,var(--hp-red),var(--hp-red-dark));
+            transition: width var(--transition-time) ease, background-color var(--transition-time) ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+        }
+
+        .hp-text {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+        }
+
+        /* Small responsive */
+        @media (max-width:900px) {
+            .columns {
+                grid-template-columns: 1fr;
+            }
+
+            .portrait-frame, .hp-wrap {
+                width: 220px;
+            }
+        }
+
+        /* Hidden state */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Utility */
+        .muted {
+            color: #9fb6d6;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app" id="app">
+        <!-- Canvas size controls -->
+        <div class="canvas-controls">
+            <label for="canvasWidth">Canvas largeur (px)</label>
+            <input id="canvasWidth" type="number" min="200" value="900" />
+            <label for="canvasHeight">Canvas hauteur (px)</label>
+            <input id="canvasHeight" type="number" min="200" value="200" />
+            <button id="applyCanvas" style="padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:var(--text);">Appliquer</button>
+            <div style="flex:1"></div>
+            <div class="muted">Mise à jour toutes les 5s depuis <strong>http://localhost:5042/Match/GetMatchInfo</strong></div>
+        </div>
+
+        <div class="canvas-wrap">
+            <canvas id="battleCanvas" width="900" height="200"></canvas>
+        </div>
+
+        <!-- Remaining time bar -->
+        <div class="remaining-wrap" id="remainingWrap">
+            <div class="remaining-bar" aria-hidden="true">
+                <div class="remaining-fill" id="remainingFill"></div>
+            </div>
+        </div>
+
+        <!-- Main columns -->
+        <div class="columns" id="mainColumns">
+            <!-- Left column -->
+            <div class="column left" id="colA">
+                <div class="pseudo" id="pseudoA">PseudoA</div>
+                <div class="portrait-frame">
+                    <img id="pictureA" src="" alt="PictureA" />
+                </div>
+                <div class="small-row">
+                    <div class="small-frame"><img id="armorA" src="" alt="ArmorA" /></div>
+                    <div class="small-frame"><img id="weaponA" src="" alt="WeaponA" /></div>
+                </div>
+                <div class="hp-wrap" style="margin-top:6px;">
+                    <div class="hp-fill" id="hpFillA" style="width:0%"></div>
+                    <div class="hp-text" id="hpTextA">0 / 0</div>
+                </div>
+            </div>
+
+            <!-- Center column -->
+            <div class="column center" id="colCenter">
+                <div style="height:18px"></div>
+                <div class="portrait-frame" style="width:256px;height:256px;">
+                    <img id="imageCenter" src="" alt="ImageCenter" />
+                </div>
+            </div>
+
+            <!-- Right column -->
+            <div class="column right" id="colB">
+                <div class="pseudo" id="pseudoB">PseudoB</div>
+                <div class="portrait-frame">
+                    <img id="pictureB" src="" alt="PictureB" />
+                </div>
+                <div class="small-row" style="justify-content:flex-end;">
+                    <div class="small-frame"><img id="weaponB" src="" alt="WeaponB" /></div>
+                    <div class="small-frame"><img id="armorB" src="" alt="ArmorB" /></div>
+                </div>
+                <div class="hp-wrap" style="margin-top:6px;">
+                    <div class="hp-fill" id="hpFillB" style="width:0%"></div>
+                    <div class="hp-text" id="hpTextB">0 / 0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /*
+              Single-file combat interface.
+              - Polls GET http://localhost:5042/GetMatchInfo every 5s
+              - If response is invalid or empty object {}, hides the whole UI
+              - Animates RemainingTime bar color and width
+              - Animates HP bars (width and color) and displays HPA/HPMax and HPB/HPMax
+              - Canvas size configurable via inputs (applies to #battleCanvas)
+              - All in one file
+            */
+
+        /* Helpers */
+        const $ = id => document.getElementById(id);
+        const app = $('app');
+        const remainingFill = $('remainingFill');
+        const remainingWrap = $('remainingWrap');
+
+        const pseudoA = $('pseudoA');
+        const pictureA = $('pictureA');
+        const armorA = $('armorA');
+        const weaponA = $('weaponA');
+        const hpFillA = $('hpFillA');
+        const hpTextA = $('hpTextA');
+
+        const pseudoB = $('pseudoB');
+        const pictureB = $('pictureB');
+        const armorB = $('armorB');
+        const weaponB = $('weaponB');
+        const hpFillB = $('hpFillB');
+        const hpTextB = $('hpTextB');
+
+        const imageCenter = $('imageCenter');
+
+        const canvas = $('battleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const canvasWidthInput = $('canvasWidth');
+        const canvasHeightInput = $('canvasHeight');
+        const applyCanvasBtn = $('applyCanvas');
+
+        let pollInterval = 5000;
+        let pollTimer = null;
+
+        /* Utility: set element image safely */
+        function setImg(el, url) {
+            if (!url) { el.src = ''; el.style.visibility = 'hidden'; return; }
+            el.style.visibility = 'visible';
+            el.src = url;
+        }
+
+        /* Color thresholds for RemainingTime (percent 0-100)
+           - 100-50%: green
+           - 49-25%: yellow
+           - 24-10%: orange
+           - 0-10%: red
+        */
+        function remainingColor(percent) {
+            if (percent > 50) return ['#2ecc71', '#27ae60']; // green gradient
+            if (percent > 24) return ['#f1c40f', '#f39c12']; // yellow
+            if (percent > 9) return ['#ff8c00', '#ff6f00']; // orange
+            return ['#e74c3c', '#c0392b']; // red
+        }
+
+        /* Update remaining bar */
+        function updateRemaining(percent) {
+            if (percent == null || isNaN(percent)) return;
+            percent = Math.max(0, Math.min(100, percent));
+            remainingFill.style.width = percent + '%';
+            const cols = remainingColor(percent);
+            remainingFill.style.background = `linear-gradient(90deg, ${cols[0]}, ${cols[1]})`;
+        }
+
+        /* HP bar color: keep red gradient but we can darken when low */
+        function hpColor(percent) {
+            // percent 0-100
+            if (percent > 50) return ['#b71c1c', '#7a0f0f'];
+            if (percent > 24) return ['#c62828', '#8e1414'];
+            if (percent > 9) return ['#d84315', '#a32f10'];
+            return ['#ff3b30', '#b71c1c'];
+        }
+
+        /* Update HP bar with animation */
+        function updateHP(fillEl, textEl, value, max) {
+            if (max == null || max <= 0) { fillEl.style.width = '0%'; textEl.textContent = '0 / 0'; return; }
+            const pct = Math.max(0, Math.min(100, (value / max) * 100));
+            fillEl.style.width = pct + '%';
+            const cols = hpColor(pct);
+            fillEl.style.background = `linear-gradient(90deg, ${cols[0]}, ${cols[1]})`;
+            textEl.textContent = `${value} / ${max}`;
+        }
+
+        /* Draw something on canvas (simple decorative background + optional dynamic elements) */
+        function drawCanvas(data) {
+            const w = canvas.width;
+            const h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+
+            // subtle grid
+            ctx.fillStyle = 'rgba(255,255,255,0.02)';
+            ctx.fillRect(0, 0, w, h);
+
+            // center emblem or dynamic indicator based on RemainingTime
+            if (data && typeof data.RemainingTimePercent === 'number') {
+                const p = Math.max(0, Math.min(100, data.RemainingTimePercent));
+                const radius = Math.max(20, Math.min(h / 2 - 10, (w / 6)));
+                const cx = w / 2;
+                const cy = h / 2;
+
+                // background ring
+                ctx.beginPath();
+                ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255,255,255,0.02)';
+                ctx.fill();
+
+                // progress arc
+                const start = -Math.PI / 2;
+                const end = start + (Math.PI * 2) * (p / 100);
+                const cols = remainingColor(p);
+                // gradient stroke
+                const grad = ctx.createLinearGradient(cx - radius, cy - radius, cx + radius, cy + radius);
+                grad.addColorStop(0, cols[0]);
+                grad.addColorStop(1, cols[1]);
+
+                ctx.lineWidth = 8;
+                ctx.strokeStyle = grad;
+                ctx.beginPath();
+                ctx.arc(cx, cy, radius, start, end);
+                ctx.stroke();
+
+                // small center icon (simple)
+                ctx.fillStyle = 'rgba(255,255,255,0.06)';
+                ctx.beginPath();
+                ctx.arc(cx, cy, Math.max(6, radius * 0.25), 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        /* Validate JSON: if invalid or {} -> hide UI */
+        function isEmptyObject(obj) {
+            return obj && typeof obj === 'object' && Object.keys(obj).length === 0;
+        }
+
+        /* Main update from fetched JSON */
+        function applyData(json) {
+            if (!json || typeof json !== 'object' || isEmptyObject(json)) {
+                // hide everything
+                app.classList.add('hidden');
+                return;
+            }
+            // show app
+            app.classList.remove('hidden');
+
+            // RemainingTimePercent expected 0-100
+            if (typeof json.RemainingTimePercent === 'number') {
+                updateRemaining(json.RemainingTimePercent);
+            }
+
+            // Left column
+            if (typeof json.PseudoA === 'string') pseudoA.textContent = json.PseudoA;
+            setImg(pictureA, json.PictureA || '');
+            setImg(armorA, json.ArmorA || '');
+            setImg(weaponA, json.WeaponA || '');
+
+            // HP A
+            const HPA = Number.isFinite(json.HPA) ? json.HPA : null;
+            const HPMaxA = Number.isFinite(json.HPMax) ? json.HPMax : null;
+            if (HPA != null && HPMaxA != null) {
+                updateHP(hpFillA, hpTextA, HPA, HPMaxA);
+            }
+
+            // Center image
+            setImg(imageCenter, json.ImageCenter || '');
+
+            // Right column
+            if (typeof json.PseudoB === 'string') pseudoB.textContent = json.PseudoB;
+            setImg(pictureB, json.PictureB || '');
+            setImg(weaponB, json.WeaponB || '');
+            setImg(armorB, json.ArmorB || '');
+
+            // HP B
+            const HPB = Number.isFinite(json.HPB) ? json.HPB : null;
+            const HPMaxB = Number.isFinite(json.HPMax) ? json.HPMax : null; // HPMax shared name
+            if (HPB != null && HPMaxB != null) {
+                updateHP(hpFillB, hpTextB, HPB, HPMaxB);
+            }
+
+            // draw canvas decorative elements
+            drawCanvas(json);
+        }
+
+        /* Fetch loop */
+        async function fetchAndUpdate() {
+            try {
+                const res = await fetch('http://localhost:5042/GetMatchInfo', { cache: 'no-store' });
+                if (!res.ok) {
+                    // hide UI if server error or not reachable
+                    console.warn('Fetch failed', res.status);
+                    app.classList.add('hidden');
+                    return;
+                }
+                const text = await res.text();
+                if (!text || text.trim() === '') {
+                    app.classList.add('hidden');
+                    return;
+                }
+                let json;
+                try {
+                    json = JSON.parse(text);
+                } catch (e) {
+                    console.warn('Invalid JSON', e);
+                    app.classList.add('hidden');
+                    return;
+                }
+                // If empty object -> hide
+                if (isEmptyObject(json)) {
+                    app.classList.add('hidden');
+                    return;
+                }
+                applyData(json);
+            } catch (err) {
+                console.warn('Fetch error', err);
+                app.classList.add('hidden');
+            }
+        }
+
+        /* Start polling */
+        function startPolling() {
+            if (pollTimer) clearInterval(pollTimer);
+            // initial fetch immediately
+            fetchAndUpdate();
+            pollTimer = setInterval(fetchAndUpdate, pollInterval);
+        }
+
+        /* Canvas size controls */
+        function applyCanvasSize() {
+            const w = Math.max(200, parseInt(canvasWidthInput.value) || 900);
+            const h = Math.max(100, parseInt(canvasHeightInput.value) || 200);
+            canvas.width = w;
+            canvas.height = h;
+            canvas.style.width = w + 'px';
+            canvas.style.height = h + 'px';
+            drawCanvas({ RemainingTimePercent: 100 }); // redraw placeholder
+        }
+
+        /* Wire up controls */
+        applyCanvasBtn.addEventListener('click', () => {
+            applyCanvasSize();
+        });
+
+        /* Initialize */
+        applyCanvasSize();
+        startPolling();
+
+        /* Clean up on unload */
+        window.addEventListener('beforeunload', () => {
+            if (pollTimer) clearInterval(pollTimer);
+        });</script>
+</body>
+</html>
