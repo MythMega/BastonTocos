@@ -1,8 +1,13 @@
-﻿using System;
-using System.Net;
-using System.Threading.Tasks;
-using Bastocos.Controller.User;
+﻿using Bastocos.Business.Match;
 using Bastocos.Controller.Match;
+using Bastocos.Controller.User;
+using Bastocos.Entity.Admin;
+using Bastocos.Entity.Admin.Settings;
+using System;
+using System.IO;
+using System.Net;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Bastocos
 {
@@ -12,7 +17,17 @@ namespace Bastocos
 
         private static async Task Main(string[] args)
         {
-            Console.WriteLine("Serveur Bastocos démarré...");
+            Console.WriteLine("Chargement des données.");
+            EnvItem GlobalEnvironmentItem = new EnvItem();
+            GlobalEnvironmentItem.LoadAllData();
+            Console.WriteLine("Données initialisées.");
+
+            Console.WriteLine("Chargement des paramètres.");
+            SettingsItem GlobalSettingsItems = new SettingsItem();
+            GlobalSettingsItems = JsonSerializer.Deserialize<SettingsItem>($"./Data/Settings.json");
+            Console.WriteLine("Paramètres initialisés.");
+
+            JsonSerializerOptions JsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
             // --- CONFIG HTTP LISTENER ---
             HttpListener listener = new HttpListener();
@@ -24,44 +39,60 @@ namespace Bastocos
             #region Controllers
 
             var userController = new UserController();
-            var assautController = new AssautController();
+            var assautController = new MatchController();
 
             #endregion Controllers
 
             while (_running)
             {
-                // Vérifier si une requête arrive sans bloquer
-                var contextTask = listener.GetContextAsync();
+                var context = await listener.GetContextAsync();
 
-                // Si la requête n'est pas encore arrivée, on peut faire autre chose
-                while (!contextTask.IsCompleted)
+                var request = context.Request;
+                var response = context.Response;
+
+                // CORS
+                response.AddHeader("Access-Control-Allow-Origin", "*");
+                response.AddHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+                response.AddHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+                if (GlobalEnvironmentItem.CurrentMatch == null &&
+                    GlobalEnvironmentItem.LastMatchEnd.AddMinutes(GlobalSettingsItems.MatchSettings.DelayBetweenTwoMatch) <= DateTime.Now)
                 {
-                    // --- IDLE ---
-
-                    await Task.Delay(10); // éviter de bloquer le CPU
+                    new MatchBusiness().Start(GlobalEnvironmentItem, GlobalSettingsItems.MatchSettings);
                 }
 
-                // Une requête est arrivée
-                var context = contextTask.Result;
-                _ = Task.Run(() => HandleRequest(context, userController, assautController));
+                _ = Task.Run(() => HandleRequest(context, userController, assautController, GlobalEnvironmentItem, GlobalSettingsItems));
             }
         }
 
-        private static void HandleRequest(HttpListenerContext context, UserController userCtrl, AssautController matchCtrl)
+        private static async Task HandleRequest(
+            // Request and content
+            HttpListenerContext context,
+
+            // Controllers
+            UserController userCtrl,
+            MatchController matchCtrl,
+
+            // Data
+            EnvItem GlobalEnvironmentItem,
+            SettingsItem GlobalSettingsItems
+            )
         {
             string path = context.Request.Url.AbsolutePath.ToLower();
             string method = context.Request.HttpMethod;
 
             Console.WriteLine($"Requête reçue : {method} {path}");
 
+            string response = String.Empty;
+
             // --- ROUTING ---
             if (path.StartsWith("/user"))
             {
-                userCtrl.Handle(context);
+                response = await userCtrl.HandleAsync(context, GlobalEnvironmentItem, GlobalSettingsItems);
             }
             else if (path.StartsWith("/match"))
             {
-                matchCtrl.Handle(context);
+                response = await matchCtrl.HandleAsync(context, GlobalEnvironmentItem, GlobalSettingsItems);
             }
             else
             {

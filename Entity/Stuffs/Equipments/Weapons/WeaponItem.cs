@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bastocos.Entity.Stuffs.Equipments.Weapons
 {
-    public class WeaponItem : StuffItem
+    public class WeaponItem : EquipmentItem
     {
         public string ItemType { get; set; } = "WEAPON";
     }

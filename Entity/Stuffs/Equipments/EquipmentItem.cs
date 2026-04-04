@@ -8,5 +8,7 @@ namespace Bastocos.Entity.Stuffs.Equipments
 {
     public class EquipmentItem : StuffItem
     {
+        public int Attack { get; set; } = 0;
+        public int Defense { get; set; } = 0;
     }
 }

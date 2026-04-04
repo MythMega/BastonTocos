@@ -1,4 +1,5 @@
 ﻿using Bastocos.Entity.Admin.Database;
+using Bastocos.Tools;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
@@ -15,16 +16,16 @@ namespace Bastocos.Business.Database
 
         public static bool DatabaseExist(DatabaseConnection dbconnect)
         {
-            return File.Exists(dbconnect.ConnectionString);
+            return File.Exists(GlobalVar.ConnectionString);
         }
 
         public static void CreateDatabaseFile(DatabaseConnection dbconnect)
         {
             // Crée le fichier si inexistant
-            if (!File.Exists(dbconnect.ConnectionString))
-                File.Create(dbconnect.ConnectionString).Close();
+            if (!File.Exists(GlobalVar.ConnectionString))
+                File.Create(GlobalVar.ConnectionString).Close();
 
-            using (var connection = new SqliteConnection($"Data Source={dbconnect.ConnectionString};"))
+            using (var connection = new SqliteConnection($"Data Source={GlobalVar.ConnectionString};"))
             {
                 connection.Open();
 
@@ -41,7 +42,7 @@ namespace Bastocos.Business.Database
         {
             var item = new VersionsItem();
 
-            using (var connection = new SqliteConnection($"Data Source={dbconnect.ConnectionString};"))
+            using (var connection = new SqliteConnection($"Data Source={GlobalVar.ConnectionString};"))
             {
                 connection.Open();
 
@@ -93,7 +94,7 @@ namespace Bastocos.Business.Database
                 string sql = File.ReadAllText(file);
 
                 // 4. Exécuter le script
-                using (var connection = new SqliteConnection($"Data Source={dbconnect.ConnectionString};"))
+                using (var connection = new SqliteConnection($"Data Source={GlobalVar.ConnectionString};"))
                 {
                     connection.Open();
 

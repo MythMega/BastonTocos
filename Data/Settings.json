@@ -3,6 +3,7 @@
   "logFile": true,
   "serverPort": 5042,
   "MatchSettings": {
+    "DelayBetweenTwoMatch": 1,
     "DefaultsMatchSettings": {
       "DefaultHP": 1000,
       "DefaultDamage": 10,
@@ -35,7 +36,7 @@
     "RefreshRateSeconds": 0.1
   },
   "CommandSettings": {
-    "DuelRequest": {
+    "DuelRequestSettings": {
       "Request": "!duel {name}",
       "Deny": "!duel-deny {name}",
       "Accept": "!duel-accept {name}"
