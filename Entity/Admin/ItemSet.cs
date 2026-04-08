@@ -1,4 +1,4 @@
-﻿using Bastocos.Entity.Stuffs.Equipments.Armors;
+using Bastocos.Entity.Stuffs.Equipments.Armors;
 using Bastocos.Entity.Stuffs.Equipments.Weapons;
 using Bastocos.Entity.Stuffs.Trashs;
 using System;
@@ -11,8 +11,8 @@ namespace Bastocos.Entity.Admin
 {
     public class ItemSet
     {
-        public List<Trashitem> Trashitems { get; set; }
-        public List<ArmorItem> ArmorItems { get; set; }
-        public List<WeaponItem> WeaponItems { get; set; }
+        public List<Trashitem> Trashitems { get; set; } = new List<Trashitem>();
+        public List<ArmorItem> ArmorItems { get; set; } = new List<ArmorItem>();
+        public List<WeaponItem> WeaponItems { get; set; } = new List<WeaponItem>();
     }
 }

@@ -1,7 +1,7 @@
 {
   "logEverything": true,
   "logFile": true,
-  "serverPort": 5042,
+  "ServerPort": 5042,
   "MatchSettings": {
     "DelayBetweenTwoMatch": 1,
     "DefaultsMatchSettings": {

@@ -1,12 +1,9 @@
-﻿using Bastocos.Entity.Admin.Database;
+using Bastocos.Entity.Admin.Database;
 using Bastocos.Tools;
 using Microsoft.Data.Sqlite;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bastocos.Business.Database
 {
@@ -14,12 +11,12 @@ namespace Bastocos.Business.Database
     {
         public static int DatabaseVersion = 1;
 
-        public static bool DatabaseExist(DatabaseConnection dbconnect)
+        public static bool DatabaseExist()
         {
             return File.Exists(GlobalVar.ConnectionString);
         }
 
-        public static void CreateDatabaseFile(DatabaseConnection dbconnect)
+        public static void CreateDatabaseFile()
         {
             // Crée le fichier si inexistant
             if (!File.Exists(GlobalVar.ConnectionString))
@@ -38,7 +35,7 @@ namespace Bastocos.Business.Database
             }
         }
 
-        private static VersionsItem GetVersions(DatabaseConnection dbconnect)
+        private static VersionsItem GetVersions()
         {
             var item = new VersionsItem();
 
@@ -63,10 +60,10 @@ namespace Bastocos.Business.Database
             return item;
         }
 
-        public static void UpdateDatabaseFile(DatabaseConnection dbconnect)
+        public static void UpdateDatabaseFile()
         {
             // 1. Lire la version actuelle
-            VersionsItem versions = GetVersions(dbconnect);
+            VersionsItem versions = GetVersions();
             int currentVersion = versions.DatabaseVersion;
 
             Console.WriteLine($"Current DB version: {currentVersion}");

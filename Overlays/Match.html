@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Interface de combat</title>
+    <title>Interface de combat (avec slots)</title>
     <style>
         :root {
             --bg: #0f1724;
@@ -138,23 +138,42 @@
             letter-spacing: 0.4px;
         }
 
+        /* Portrait frame: slot image behind the actual picture */
         .portrait-frame {
             width: 256px;
             height: 256px;
             border-radius: 8px;
-            overflow: hidden;
-            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
-            border: 2px solid rgba(255,255,255,0.03);
+            overflow: visible; /* allow slot to show behind */
+            background: transparent;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-            .portrait-frame img {
-                width: 100%;
-                height: 100%;
+            .portrait-frame .slot {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 256px;
+                height: 256px;
+                border-radius: 8px;
                 object-fit: cover;
+                z-index: 0; /* behind */
+                pointer-events: none;
+                filter: none;
+            }
+
+            .portrait-frame img.portrait {
+                position: relative;
+                width: 256px;
+                height: 256px;
+                border-radius: 8px;
+                object-fit: cover;
+                z-index: 1; /* above slot */
                 display: block;
+                box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+                border: 2px solid rgba(255,255,255,0.03);
             }
 
         .small-row {
@@ -162,23 +181,40 @@
             gap: 8px;
         }
 
+        /* Small frame: slot behind small image */
         .small-frame {
             width: 64px;
             height: 64px;
             border-radius: 6px;
-            overflow: hidden;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.03);
+            overflow: visible;
+            background: transparent;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-            .small-frame img {
-                width: 100%;
-                height: 100%;
+            .small-frame .slot {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 64px;
+                height: 64px;
+                border-radius: 6px;
                 object-fit: cover;
+                z-index: 0;
+                pointer-events: none;
+            }
+
+            .small-frame img.item {
+                position: relative;
+                width: 64px;
+                height: 64px;
+                border-radius: 6px;
+                object-fit: cover;
+                z-index: 1;
                 display: block;
+                border: 1px solid rgba(255,255,255,0.03);
             }
 
         /* HP bar with gold border */
@@ -234,6 +270,11 @@
             .portrait-frame, .hp-wrap {
                 width: 220px;
             }
+
+                .portrait-frame .slot, .portrait-frame img.portrait {
+                    width: 220px;
+                    height: 220px;
+                }
         }
 
         /* Hidden state */
@@ -258,7 +299,7 @@
             <input id="canvasHeight" type="number" min="200" value="200" />
             <button id="applyCanvas" style="padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:var(--text);">Appliquer</button>
             <div style="flex:1"></div>
-            <div class="muted">Mise � jour toutes les 5s depuis <strong>http://localhost:5042/Match/GetMatchInfo</strong></div>
+            <div class="muted">Mise à jour toutes les 5s depuis <strong>http://localhost:5042/Match/GetMatchInfo</strong></div>
         </div>
 
         <div class="canvas-wrap">
@@ -277,13 +318,25 @@
             <!-- Left column -->
             <div class="column left" id="colA">
                 <div class="pseudo" id="pseudoA">PseudoA</div>
-                <div class="portrait-frame">
-                    <img id="pictureA" src="" alt="PictureA" />
+
+                <!-- Portrait with slot behind -->
+                <div class="portrait-frame" aria-hidden="false">
+                    <img class="slot" id="slotPortraitA" src="https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/empy_slot.png" alt="slot portrait A" />
+                    <img class="portrait" id="pictureA" src="" alt="PictureA" />
                 </div>
+
+                <!-- Small items with slots behind each -->
                 <div class="small-row">
-                    <div class="small-frame"><img id="armorA" src="" alt="ArmorA" /></div>
-                    <div class="small-frame"><img id="weaponA" src="" alt="WeaponA" /></div>
+                    <div class="small-frame">
+                        <img class="slot" src="https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/armor_slot.png" alt="armor slot A" />
+                        <img class="item" id="armorA" src="" alt="ArmorA" />
+                    </div>
+                    <div class="small-frame">
+                        <img class="slot" src="https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/weapon_slot.png" alt="weapon slot A" />
+                        <img class="item" id="weaponA" src="" alt="WeaponA" />
+                    </div>
                 </div>
+
                 <div class="hp-wrap" style="margin-top:6px;">
                     <div class="hp-fill" id="hpFillA" style="width:0%"></div>
                     <div class="hp-text" id="hpTextA">0 / 0</div>
@@ -294,20 +347,33 @@
             <div class="column center" id="colCenter">
                 <div style="height:18px"></div>
                 <div class="portrait-frame" style="width:256px;height:256px;">
-                    <img id="imageCenter" src="" alt="ImageCenter" />
+                    <img class="slot" id="slotCenter" src="https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/empy_slot.png" alt="slot center" />
+                    <img class="portrait" id="imageCenter" src="" alt="ImageCenter" />
                 </div>
             </div>
 
             <!-- Right column -->
             <div class="column right" id="colB">
                 <div class="pseudo" id="pseudoB">PseudoB</div>
-                <div class="portrait-frame">
-                    <img id="pictureB" src="" alt="PictureB" />
+
+                <!-- Portrait with slot behind -->
+                <div class="portrait-frame" aria-hidden="false">
+                    <img class="slot" id="slotPortraitB" src="https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/empy_slot.png" alt="slot portrait B" />
+                    <img class="portrait" id="pictureB" src="" alt="PictureB" />
                 </div>
+
+                <!-- Small items with slots behind each (weapon then armor to match requested order) -->
                 <div class="small-row" style="justify-content:flex-end;">
-                    <div class="small-frame"><img id="weaponB" src="" alt="WeaponB" /></div>
-                    <div class="small-frame"><img id="armorB" src="" alt="ArmorB" /></div>
+                    <div class="small-frame">
+                        <img class="slot" src="https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/weapon_slot.png" alt="weapon slot B" />
+                        <img class="item" id="weaponB" src="" alt="WeaponB" />
+                    </div>
+                    <div class="small-frame">
+                        <img class="slot" src="https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/armor_slot.png" alt="armor slot B" />
+                        <img class="item" id="armorB" src="" alt="ArmorB" />
+                    </div>
                 </div>
+
                 <div class="hp-wrap" style="margin-top:6px;">
                     <div class="hp-fill" id="hpFillB" style="width:0%"></div>
                     <div class="hp-text" id="hpTextB">0 / 0</div>
@@ -318,20 +384,15 @@
 
     <script>
         /*
-              Single-file combat interface.
-              - Polls GET http://localhost:5042/GetMatchInfo every 5s
-              - If response is invalid or empty object {}, hides the whole UI
-              - Animates RemainingTime bar color and width
-              - Animates HP bars (width and color) and displays HPA/HPMax and HPB/HPMax
-              - Canvas size configurable via inputs (applies to #battleCanvas)
-              - All in one file
-            */
+          Version modifiée : chaque slot (portrait, weapon, armor) a une image "slot" en dessous (z-index inférieur).
+          - Les URLs des slots sont intégrées dans le HTML (fournies par l'utilisateur).
+          - Le script conserve le comportement précédent : polling toutes les 5s sur /GetMatchInfo, animation des barres, cacher si JSON invalide ou {}.
+        */
 
         /* Helpers */
         const $ = id => document.getElementById(id);
         const app = $('app');
         const remainingFill = $('remainingFill');
-        const remainingWrap = $('remainingWrap');
 
         const pseudoA = $('pseudoA');
         const pictureA = $('pictureA');
@@ -359,21 +420,21 @@
         let pollInterval = 5000;
         let pollTimer = null;
 
-        /* Utility: set element image safely */
+        /* Utility: set element image safely (keeps slot visible even if item missing) */
         function setImg(el, url) {
-            if (!url) { el.src = ''; el.style.visibility = 'hidden'; return; }
+            if (!el) return;
+            if (!url) {
+                el.src = '';
+                el.style.visibility = 'hidden';
+                return;
+            }
             el.style.visibility = 'visible';
             el.src = url;
         }
 
-        /* Color thresholds for RemainingTime (percent 0-100)
-           - 100-50%: green
-           - 49-25%: yellow
-           - 24-10%: orange
-           - 0-10%: red
-        */
+        /* Color thresholds for RemainingTime (percent 0-100) */
         function remainingColor(percent) {
-            if (percent > 50) return ['#2ecc71', '#27ae60']; // green gradient
+            if (percent > 50) return ['#2ecc71', '#27ae60']; // green
             if (percent > 24) return ['#f1c40f', '#f39c12']; // yellow
             if (percent > 9) return ['#ff8c00', '#ff6f00']; // orange
             return ['#e74c3c', '#c0392b']; // red
@@ -388,9 +449,8 @@
             remainingFill.style.background = `linear-gradient(90deg, ${cols[0]}, ${cols[1]})`;
         }
 
-        /* HP bar color: keep red gradient but we can darken when low */
+        /* HP bar color */
         function hpColor(percent) {
-            // percent 0-100
             if (percent > 50) return ['#b71c1c', '#7a0f0f'];
             if (percent > 24) return ['#c62828', '#8e1414'];
             if (percent > 9) return ['#d84315', '#a32f10'];
@@ -407,34 +467,30 @@
             textEl.textContent = `${value} / ${max}`;
         }
 
-        /* Draw something on canvas (simple decorative background + optional dynamic elements) */
+        /* Draw canvas decorative elements */
         function drawCanvas(data) {
             const w = canvas.width;
             const h = canvas.height;
             ctx.clearRect(0, 0, w, h);
 
-            // subtle grid
+            // subtle background
             ctx.fillStyle = 'rgba(255,255,255,0.02)';
             ctx.fillRect(0, 0, w, h);
 
-            // center emblem or dynamic indicator based on RemainingTime
             if (data && typeof data.RemainingTimePercent === 'number') {
                 const p = Math.max(0, Math.min(100, data.RemainingTimePercent));
                 const radius = Math.max(20, Math.min(h / 2 - 10, (w / 6)));
                 const cx = w / 2;
                 const cy = h / 2;
 
-                // background ring
                 ctx.beginPath();
                 ctx.arc(cx, cy, radius, 0, Math.PI * 2);
                 ctx.fillStyle = 'rgba(255,255,255,0.02)';
                 ctx.fill();
 
-                // progress arc
                 const start = -Math.PI / 2;
                 const end = start + (Math.PI * 2) * (p / 100);
                 const cols = remainingColor(p);
-                // gradient stroke
                 const grad = ctx.createLinearGradient(cx - radius, cy - radius, cx + radius, cy + radius);
                 grad.addColorStop(0, cols[0]);
                 grad.addColorStop(1, cols[1]);
@@ -445,7 +501,6 @@
                 ctx.arc(cx, cy, radius, start, end);
                 ctx.stroke();
 
-                // small center icon (simple)
                 ctx.fillStyle = 'rgba(255,255,255,0.06)';
                 ctx.beginPath();
                 ctx.arc(cx, cy, Math.max(6, radius * 0.25), 0, Math.PI * 2);
@@ -461,14 +516,11 @@
         /* Main update from fetched JSON */
         function applyData(json) {
             if (!json || typeof json !== 'object' || isEmptyObject(json)) {
-                // hide everything
                 app.classList.add('hidden');
                 return;
             }
-            // show app
             app.classList.remove('hidden');
 
-            // RemainingTimePercent expected 0-100
             if (typeof json.RemainingTimePercent === 'number') {
                 updateRemaining(json.RemainingTimePercent);
             }
@@ -479,7 +531,6 @@
             setImg(armorA, json.ArmorA || '');
             setImg(weaponA, json.WeaponA || '');
 
-            // HP A
             const HPA = Number.isFinite(json.HPA) ? json.HPA : null;
             const HPMaxA = Number.isFinite(json.HPMax) ? json.HPMax : null;
             if (HPA != null && HPMaxA != null) {
@@ -495,14 +546,12 @@
             setImg(weaponB, json.WeaponB || '');
             setImg(armorB, json.ArmorB || '');
 
-            // HP B
             const HPB = Number.isFinite(json.HPB) ? json.HPB : null;
-            const HPMaxB = Number.isFinite(json.HPMax) ? json.HPMax : null; // HPMax shared name
+            const HPMaxB = Number.isFinite(json.HPMax) ? json.HPMax : null;
             if (HPB != null && HPMaxB != null) {
                 updateHP(hpFillB, hpTextB, HPB, HPMaxB);
             }
 
-            // draw canvas decorative elements
             drawCanvas(json);
         }
 
@@ -511,7 +560,6 @@
             try {
                 const res = await fetch('http://localhost:5042/GetMatchInfo', { cache: 'no-store' });
                 if (!res.ok) {
-                    // hide UI if server error or not reachable
                     console.warn('Fetch failed', res.status);
                     app.classList.add('hidden');
                     return;
@@ -529,7 +577,6 @@
                     app.classList.add('hidden');
                     return;
                 }
-                // If empty object -> hide
                 if (isEmptyObject(json)) {
                     app.classList.add('hidden');
                     return;
@@ -544,7 +591,6 @@
         /* Start polling */
         function startPolling() {
             if (pollTimer) clearInterval(pollTimer);
-            // initial fetch immediately
             fetchAndUpdate();
             pollTimer = setInterval(fetchAndUpdate, pollInterval);
         }
@@ -557,7 +603,7 @@
             canvas.height = h;
             canvas.style.width = w + 'px';
             canvas.style.height = h + 'px';
-            drawCanvas({ RemainingTimePercent: 100 }); // redraw placeholder
+            drawCanvas({ RemainingTimePercent: 100 });
         }
 
         /* Wire up controls */
@@ -572,6 +618,7 @@
         /* Clean up on unload */
         window.addEventListener('beforeunload', () => {
             if (pollTimer) clearInterval(pollTimer);
-        });</script>
+        });
+    </script>
 </body>
 </html>

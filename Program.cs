@@ -1,10 +1,12 @@
-﻿using Bastocos.Business.Match;
+using Bastocos.Business.Database;
+using Bastocos.Business.Match;
 using Bastocos.Controller.Match;
 using Bastocos.Controller.User;
 using Bastocos.Entity.Admin;
 using Bastocos.Entity.Admin.Settings;
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -24,17 +26,24 @@ namespace Bastocos
 
             Console.WriteLine("Chargement des paramètres.");
             SettingsItem GlobalSettingsItems = new SettingsItem();
-            GlobalSettingsItems = JsonSerializer.Deserialize<SettingsItem>($"./Data/Settings.json");
+            GlobalSettingsItems = JsonSerializer.Deserialize<SettingsItem>(File.ReadAllText($"./Data/Settings.json"));
             Console.WriteLine("Paramètres initialisés.");
+
+            if (!DatabaseManagement.DatabaseExist())
+            {
+                DatabaseManagement.CreateDatabaseFile();
+            }
+
+            DatabaseManagement.UpdateDatabaseFile();
 
             JsonSerializerOptions JsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
             // --- CONFIG HTTP LISTENER ---
             HttpListener listener = new HttpListener();
-            listener.Prefixes.Add("http://*:8080/"); // écoute sur port 8080
+            listener.Prefixes.Add($"http://*:{GlobalSettingsItems.ServerPort}/"); // écoute sur port configuré
             listener.Start();
 
-            Console.WriteLine("Écoute sur http://localhost:8080/");
+            Console.WriteLine($"Écoute sur http://localhost:{GlobalSettingsItems.ServerPort}/");
 
             #region Controllers
 
@@ -58,10 +67,17 @@ namespace Bastocos
                 if (GlobalEnvironmentItem.CurrentMatch == null &&
                     GlobalEnvironmentItem.LastMatchEnd.AddMinutes(GlobalSettingsItems.MatchSettings.DelayBetweenTwoMatch) <= DateTime.Now)
                 {
-                    new MatchBusiness().Start(GlobalEnvironmentItem, GlobalSettingsItems.MatchSettings);
-                }
+                    if (GlobalEnvironmentItem.FightQueue.Any(fq => fq.RequestStatut == Entity.Match.Request.RequestStatut.In_Queue))
+                    {
+                        new MatchBusiness().Start(GlobalEnvironmentItem, GlobalSettingsItems.MatchSettings);
+                    }
+                    else
+                    {
+                        GlobalEnvironmentItem.LastMatchEnd = DateTime.Now;
+                    }
 
-                _ = Task.Run(() => HandleRequest(context, userController, assautController, GlobalEnvironmentItem, GlobalSettingsItems));
+                    _ = Task.Run(() => HandleRequest(context, userController, assautController, GlobalEnvironmentItem, GlobalSettingsItems));
+                }
             }
         }
 

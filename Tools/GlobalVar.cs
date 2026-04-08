@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -9,6 +9,6 @@ namespace Bastocos.Tools
 {
     public static class GlobalVar
     {
-        public const string ConnectionString = "./database.sqlite";
+        public const string ConnectionString = "./_database.sqlite";
     }
 }

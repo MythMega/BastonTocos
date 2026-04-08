@@ -1,4 +1,4 @@
-﻿using Bastocos.Business.Match;
+using Bastocos.Business.Match;
 using Bastocos.Entity.Admin.Database;
 using Bastocos.Entity.Cards;
 using Bastocos.Entity.Match.Assault;
@@ -18,7 +18,7 @@ namespace Bastocos.Entity.Admin
     {
         public List<CardItem> CardItems { get; set; } = new List<CardItem>();
 
-        public ItemSet Items { get; set; }
+        public ItemSet Items { get; set; } = new ItemSet();
 
         public DatabaseConnection Dbconnect { get; set; } = new DatabaseConnection();
 
