@@ -1,0 +1,82 @@
+[
+  {
+    "Name": "Bloc de béton",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/card/set1/beton.png",
+    "Rarity": "Common",
+    "Enabled": true,
+    "Description": "Un bloc de béton. Fallait en faire une carte pour que ça serve.",
+    "SellValue": 2,
+    "BuyValue": 300,
+    "LootChance": 10
+  },
+  {
+    "Name": "Sphere de pal",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/card/set1/palball.png",
+    "Rarity": "Common",
+    "Enabled": true,
+    "Description": "Une sphere pour chopper des trucs, a moins qu'il y ai un DMCA de Nintendo.",
+    "SellValue": 2,
+    "BuyValue": 300,
+    "LootChance": 10
+  },
+  {
+    "Name": "Double Six",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/card/set1/doublesix.png",
+    "Rarity": "Uncommon",
+    "Enabled": true,
+    "Description": "Un lancer de dé qui fait plaisir, dommage que dans un jeu de carte on s'en foute des dés.",
+    "SellValue": 3,
+    "BuyValue": 500,
+    "LootChance": 8
+  },
+  {
+    "Name": "Steve",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/card/set1/steve.png",
+    "Rarity": "Uncommon",
+    "Enabled": true,
+    "Description": "Ce n'est pas un poisson.",
+    "SellValue": 3,
+    "BuyValue": 500,
+    "LootChance": 8
+  },
+  {
+    "Name": "Pheki et sa famille... étrange.",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/card/set1/phekifamille.png",
+    "Rarity": "Rare",
+    "Enabled": true,
+    "Description": "Un arbre généalogique qui tourne en rond.",
+    "SellValue": 5,
+    "BuyValue": 750,
+    "LootChance": 5
+  },
+  {
+    "Name": "Type-8 Transporter",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/card/set1/type8transporter.png",
+    "Rarity": "Rare",
+    "Enabled": true,
+    "Description": "Un vaisseau pour transporter un paquet de truc.",
+    "SellValue": 5,
+    "BuyValue": 750,
+    "LootChance": 5
+  },
+  {
+    "Name": "Requin de Raft",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/card/set1/raftsquale.png",
+    "Rarity": "Epic",
+    "Enabled": true,
+    "Description": "Faites gaffe, vous risquriez d'avoir quelques soucis s'il vous croque.",
+    "SellValue": 8,
+    "BuyValue": 1500,
+    "LootChance": 3
+  },
+  {
+    "Name": "Zisfire",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/card/set1/zisfire.png",
+    "Rarity": "Legendary",
+    "Enabled": true,
+    "Description": "Zisfire est humble, alors il n'a fait qu'une seule carte à son effigie.",
+    "SellValue": 10,
+    "BuyValue": 2500,
+    "LootChance": 1
+  }
+]

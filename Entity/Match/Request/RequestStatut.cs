@@ -1,4 +1,4 @@
-﻿namespace Bastocos.Entity.Match.Request
+namespace Bastocos.Entity.Match.Request
 {
     public enum RequestStatut
     {
@@ -8,6 +8,7 @@
         Running = 3,
         Pause = 4,
         Finnished = 5,
-        Expired = 6
+        Expired = 6,
+        Finishing = 7
     }
 }

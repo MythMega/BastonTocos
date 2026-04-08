@@ -1,4 +1,4 @@
-﻿using Bastocos.Entity;
+using Bastocos.Entity;
 using Bastocos.Entity.Admin;
 using Bastocos.Entity.Admin.Database;
 using Bastocos.Entity.User;
@@ -24,7 +24,7 @@ namespace Bastocos.Business.Account
             }
             if (Env.Users.Any(acc => acc.Utilisateur.Id == account.Id))
             {
-                return "account already created and in data";
+                return UpdateAccount(account, Env);
             }
             DatabaseConnection dbconnect = Env.Dbconnect;
             if (!AccountExist(account.Id, dbconnect))
@@ -34,8 +34,13 @@ namespace Bastocos.Business.Account
             }
             else
             {
-                throw new Exception(ErrorItem.ERROR_ACCOUNT_ALREADY_EXIST);
+                return UpdateAccount(account, Env);
             }
+        }
+
+        private string UpdateAccount(UserItem account, EnvItem env)
+        {
+            return env.Dbconnect.UpdateAccount(account);
         }
 
         internal UserItem GetFromUsername(string user, DatabaseConnection dbconnect)

@@ -1,4 +1,4 @@
-﻿using Bastocos.Business.Database.User;
+using Bastocos.Business.Database.User;
 using Bastocos.Entity.User;
 using System;
 using System.Collections.Generic;
@@ -18,17 +18,22 @@ namespace Bastocos.Entity.Admin.Database
 
         internal void Account_Create(UserItem account)
         {
-            throw new NotImplementedException();
+            UserDatabaseConnection.Account_Create(account);
         }
 
         internal bool Account_Exist(int accountId)
         {
-            throw new NotImplementedException();
+            return UserDatabaseConnection.Account_Exist(accountId);
         }
 
         internal UserItem GetFromUserName(string user)
         {
             return UserDatabaseConnection.GetFromUserName(user);
+        }
+
+        internal string UpdateAccount(UserItem account)
+        {
+            return UserDatabaseConnection.UpdateAccount(account);
         }
     }
 }

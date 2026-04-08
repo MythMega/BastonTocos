@@ -7,9 +7,6 @@ using Bastocos.Entity.Stuffs.Equipments.Armors;
 using Bastocos.Entity.Stuffs.Equipments.Weapons;
 using Bastocos.Entity.Stuffs.Trashs;
 using Bastocos.Entity.User;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 
 namespace Bastocos.Entity.Admin
@@ -22,13 +19,30 @@ namespace Bastocos.Entity.Admin
 
         public DatabaseConnection Dbconnect { get; set; } = new DatabaseConnection();
 
-        public List<(UserItem Utilisateur, bool Modified)> Users { get; set; }
+        public List<(UserItem Utilisateur, bool Modified, DateTime LastActivity)> Users { get; set; } = [];
 
         public List<FightRequest> FightQueue { get; set; } = new List<FightRequest>();
 
-        public FightItem CurrentMatch { get; set; }
+        public FightItem? CurrentMatch { get; set; }
 
         public DateTime LastMatchEnd { get; set; } = DateTime.Now;
+
+        public Random RandomGenerator { get; set; } = new Random();
+
+        public void RefreshLastActivity(UserItem user)
+        {
+            int index = Users.FindIndex(u => u.Utilisateur.Id == user.Id);
+
+            if (index >= 0)
+            {
+                var (Utilisateur, Modified, LastActivity) = Users[index];
+                Users[index] = (Utilisateur, Modified, DateTime.Now);
+            }
+            else
+            {
+                Users.Add((user, true, DateTime.Now));
+            }
+        }
 
         public void LoadAllData()
         {
@@ -36,6 +50,11 @@ namespace Bastocos.Entity.Admin
             LoadOneData("TRASH");
             LoadOneData("ARMOR");
             LoadOneData("WEAPON");
+            Items.ArmorItems.ForEach(a => Console.WriteLine(a.Image.Split('/').Last()));
+            Items.WeaponItems.ForEach(a => Console.WriteLine(a.Image.Split('/').Last()));
+            Console.WriteLine("////////////////");
+            Items.Trashitems.ForEach(a => Console.WriteLine(a.Name));
+            CardItems.ForEach(a => Console.WriteLine(a.Name));
         }
 
         public void LoadOneData(string type)

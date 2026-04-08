@@ -25,9 +25,12 @@ namespace Bastocos
             Console.WriteLine("Données initialisées.");
 
             Console.WriteLine("Chargement des paramètres.");
-            SettingsItem GlobalSettingsItems = new SettingsItem();
-            GlobalSettingsItems = JsonSerializer.Deserialize<SettingsItem>(File.ReadAllText($"./Data/Settings.json"));
+            SettingsItem GlobalSettingsItems = new();
+            GlobalSettingsItems = JsonSerializer.Deserialize<SettingsItem>(File.ReadAllText($"./Data/Settings.json"))!;
             Console.WriteLine("Paramètres initialisés.");
+
+            // chargement du systeme de bdd
+            SQLitePCL.Batteries.Init();
 
             if (!DatabaseManagement.DatabaseExist())
             {
@@ -36,7 +39,7 @@ namespace Bastocos
 
             DatabaseManagement.UpdateDatabaseFile();
 
-            JsonSerializerOptions JsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            JsonSerializerOptions JsonOptions = new() { PropertyNameCaseInsensitive = true };
 
             // --- CONFIG HTTP LISTENER ---
             HttpListener listener = new HttpListener();
@@ -58,12 +61,27 @@ namespace Bastocos
 
                 var request = context.Request;
                 var response = context.Response;
+                if (request.HttpMethod == "OPTIONS")
+                {
+                    response.StatusCode = 200;
+                    response.OutputStream.Close();
+                    continue;
+                }
 
                 // CORS
                 response.AddHeader("Access-Control-Allow-Origin", "*");
                 response.AddHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
                 response.AddHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
+                if (GlobalEnvironmentItem.LastMatchEnd.AddMinutes(GlobalSettingsItems.MatchSettings.DelayBetweenTwoMatch) <= DateTime.Now
+                    && GlobalEnvironmentItem.CurrentMatch is not null
+                    && !GlobalEnvironmentItem.FightQueue.Any(fq => fq.RequestStatut == Entity.Match.Request.RequestStatut.Finishing)
+                    && !GlobalEnvironmentItem.FightQueue.Any(fq => fq.RequestStatut == Entity.Match.Request.RequestStatut.Running))
+                {
+                    // rajoute x minutes de vide
+                    //GlobalEnvironmentItem.LastMatchEnd = DateTime.Now;
+                    GlobalEnvironmentItem.CurrentMatch = null;
+                }
                 if (GlobalEnvironmentItem.CurrentMatch == null &&
                     GlobalEnvironmentItem.LastMatchEnd.AddMinutes(GlobalSettingsItems.MatchSettings.DelayBetweenTwoMatch) <= DateTime.Now)
                 {
@@ -75,9 +93,8 @@ namespace Bastocos
                     {
                         GlobalEnvironmentItem.LastMatchEnd = DateTime.Now;
                     }
-
-                    _ = Task.Run(() => HandleRequest(context, userController, assautController, GlobalEnvironmentItem, GlobalSettingsItems));
                 }
+                _ = Task.Run(() => HandleRequest(context, userController, assautController, GlobalEnvironmentItem, GlobalSettingsItems));
             }
         }
 
@@ -96,11 +113,10 @@ namespace Bastocos
         {
             string path = context.Request.Url.AbsolutePath.ToLower();
             string method = context.Request.HttpMethod;
-
-            Console.WriteLine($"Requête reçue : {method} {path}");
+            if (method == "POST")
+                Console.WriteLine($"Requête reçue : {method} {path}");
 
             string response = String.Empty;
-
             // --- ROUTING ---
             if (path.StartsWith("/user"))
             {
@@ -113,7 +129,10 @@ namespace Bastocos
             else
             {
                 SendResponse(context, 404, "Route inconnue");
+                return;
             }
+
+            SendResponse(context, 200, response);
         }
 
         public static void SendResponse(HttpListenerContext ctx, int status, string message)

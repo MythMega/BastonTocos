@@ -1,0 +1,212 @@
+[
+  {
+    "Name": "Clou tordu",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/bent_nail.png",
+    "Rarity": "Common",
+    "Enabled": true,
+    "Description": "Un vieux clou rouillé et tordu. Peut-être utile pour caler une table bancale.",
+    "SellValue": 7,
+    "BuyValue": -1,
+    "LootChance": 10
+  },
+  {
+    "Name": "Pièce en plomb",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/refs/heads/master/img/items/trash/coin.png",
+    "Rarity": "Common",
+    "Enabled": true,
+    "Description": "Cette pièce est un peu pourrie, et n'a que très peu de valeur.",
+    "SellValue": 10,
+    "BuyValue": -1,
+    "LootChance": 5
+  },
+  {
+    "Name": "Bout de ficelle",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/string.png",
+    "Rarity": "Common",
+    "Enabled": true,
+    "Description": "Un morceau de ficelle effilochée. Pas assez solide pour attacher quoi que ce soit.",
+    "SellValue": 8,
+    "BuyValue": -1,
+    "LootChance": 12
+  },
+  {
+    "Name": "Éclat de poterie",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/pottery_shard.png",
+    "Rarity": "Common",
+    "Enabled": true,
+    "Description": "Un fragment d’un vase quelconque. Aucun intérêt archéologique.",
+    "SellValue": 9,
+    "BuyValue": -1,
+    "LootChance": 11
+  },
+  {
+    "Name": "Bouton cassé",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/button.png",
+    "Rarity": "Common",
+    "Enabled": true,
+    "Description": "Un bouton sans trou. Impossible à recoudre.",
+    "SellValue": 7,
+    "BuyValue": -1,
+    "LootChance": 14
+  },
+  {
+    "Name": "Morceau de cuir usé",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/leather_scrap.png",
+    "Rarity": "Common",
+    "Enabled": true,
+    "Description": "Un bout de cuir trop abîmé pour être réutilisé.",
+    "SellValue": 10,
+    "BuyValue": -1,
+    "LootChance": 9
+  },
+  {
+    "Name": "Pierre banale",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/stone.png",
+    "Rarity": "Common",
+    "Enabled": true,
+    "Description": "Une pierre. Juste une pierre.",
+    "SellValue": 7,
+    "BuyValue": -1,
+    "LootChance": 15
+  },
+  {
+    "Name": "Plume terne",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/feather.png",
+    "Rarity": "Common",
+    "Enabled": true,
+    "Description": "Une plume qui a perdu tout éclat. Même les oiseaux n’en voudraient plus.",
+    "SellValue": 8,
+    "BuyValue": -1,
+    "LootChance": 13
+  },
+  {
+    "Name": "Petit os",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/bone.png",
+    "Rarity": "Common",
+    "Enabled": true,
+    "Description": "Un petit os d’origine indéterminée. Mieux vaut ne pas poser de questions.",
+    "SellValue": 9,
+    "BuyValue": -1,
+    "LootChance": 10
+  },
+  {
+    "Name": "Écaille terne",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/scale.png",
+    "Rarity": "Common",
+    "Enabled": true,
+    "Description": "Une écaille sans éclat, probablement tombée d’une créature peu impressionnante.",
+    "SellValue": 11,
+    "BuyValue": -1,
+    "LootChance": 8
+  },
+  {
+    "Name": "Fragment de verre",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/glass_shard.png",
+    "Rarity": "Common",
+    "Enabled": true,
+    "Description": "Un éclat de verre émoussé. Même pas dangereux.",
+    "SellValue": 7,
+    "BuyValue": -1,
+    "LootChance": 12
+  },
+  {
+    "Name": "Rondelle métallique",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/washer.png",
+    "Rarity": "Common",
+    "Enabled": true,
+    "Description": "Une rondelle en métal. Peut-être utile pour un artisan… mais pas vraiment.",
+    "SellValue": 10,
+    "BuyValue": -1,
+    "LootChance": 9
+  },
+  {
+    "Name": "Mèche de cheveux",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/hair.png",
+    "Rarity": "Common",
+    "Enabled": true,
+    "Description": "Une mèche de cheveux trouvée au sol. Beurk.",
+    "SellValue": 8,
+    "BuyValue": -1,
+    "LootChance": 14
+  },
+  {
+    "Name": "Morceau de charbon",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/charcoal.png",
+    "Rarity": "Common",
+    "Enabled": true,
+    "Description": "Un petit morceau de charbon. Peut noircir les doigts.",
+    "SellValue": 9,
+    "BuyValue": -1,
+    "LootChance": 11
+  },
+  {
+    "Name": "Racine sèche",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/root.png",
+    "Rarity": "Common",
+    "Enabled": true,
+    "Description": "Une racine complètement desséchée. Aucun intérêt alchimique.",
+    "SellValue": 7,
+    "BuyValue": -1,
+    "LootChance": 15
+  },
+  {
+    "Name": "Petit engrenage",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/gear.png",
+    "Rarity": "Uncommon",
+    "Enabled": true,
+    "Description": "Un engrenage miniature provenant d’un mécanisme inconnu.",
+    "SellValue": 15,
+    "BuyValue": -1,
+    "LootChance": 6
+  },
+  {
+    "Name": "Fragment de rune effacée",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/rune_fragment.png",
+    "Rarity": "Uncommon",
+    "Enabled": true,
+    "Description": "Un morceau de pierre runique dont les symboles sont presque illisibles.",
+    "SellValue": 18,
+    "BuyValue": -1,
+    "LootChance": 5
+  },
+  {
+    "Name": "Perle terne",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/pearl.png",
+    "Rarity": "Uncommon",
+    "Enabled": true,
+    "Description": "Une perle sans éclat. Elle a connu des jours meilleurs.",
+    "SellValue": 17,
+    "BuyValue": -1,
+    "LootChance": 4
+  },
+  {
+    "Name": "Fragment de tissu brodé",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/embroidered_cloth.png",
+    "Rarity": "Uncommon",
+    "Enabled": true,
+    "Description": "Un morceau de tissu autrefois luxueux, aujourd’hui en lambeaux.",
+    "SellValue": 16,
+    "BuyValue": -1,
+    "LootChance": 7
+  },
+  {
+    "Name": "Petit pendentif fendu",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/pendant.png",
+    "Rarity": "Uncommon",
+    "Enabled": true,
+    "Description": "Un pendentif en métal bon marché, fendu en deux.",
+    "SellValue": 19,
+    "BuyValue": -1,
+    "LootChance": 3
+  },
+  {
+    "Name": "Pièce en cuivre ternie",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/trash/copper_coin.png",
+    "Rarity": "Uncommon",
+    "Enabled": true,
+    "Description": "Une vieille pièce en cuivre, presque illisible.",
+    "SellValue": 20,
+    "BuyValue": -1,
+    "LootChance": 5
+  }
+]

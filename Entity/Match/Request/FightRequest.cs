@@ -1,4 +1,4 @@
-﻿using Bastocos.Entity.User;
+using Bastocos.Entity.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +11,10 @@ namespace Bastocos.Entity.Match.Request
     {
         public DateTime DateRequest { get; set; } = DateTime.Now;
         public RequestStatut RequestStatut { get; set; } = RequestStatut.Treatment_Request;
-        public UserItem UserItemA { get; set; }
-        public UserItem UserItemB { get; set; }
+        public UserItem UserItemA { get; set; } = new UserItem();
+        public UserItem? UserItemB { get; set; }
 
         // l'utilisateur invité a duel
-        public string UserToDuel { get; set; }
+        public string UserToDuel { get; set; } = "Unrecognized String for usertoduel";
     }
 }

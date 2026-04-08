@@ -1,4 +1,5 @@
-﻿using System;
+using BastocosR2.Tools.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,8 @@ namespace Bastocos.Entity.Web
         public string PictureA { get; set; }
         public string ArmorA { get; set; }
         public string WeaponA { get; set; }
+        public int ArmorAValue { get; set; }
+        public int WeaponAValue { get; set; }
         public int HPA { get; set; }
         public int HPMax { get; set; }
         public string ImageCenter { get; set; }
@@ -21,7 +24,10 @@ namespace Bastocos.Entity.Web
         public string PictureB { get; set; }
         public string WeaponB { get; set; }
         public string ArmorB { get; set; }
+        public int ArmorBValue { get; set; }
+        public int WeaponBValue { get; set; }
         public int HPB { get; set; }
+        public List<WebHitData> WebHitDatas { get; set; } = [];
 
         // Méthode qui renvoie le JSON complet
         public string ToJson()

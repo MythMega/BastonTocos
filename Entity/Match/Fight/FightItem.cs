@@ -1,4 +1,5 @@
-﻿using Bastocos.Entity.Match.Fight;
+using Bastocos.Entity.Match.Fight;
+using BastocosR2.Tools.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,17 @@ namespace Bastocos.Entity.Match.Assault
 {
     public class FightItem
     {
-        public FightStats FightStats { get; set; }
-        public Fighter FighterA { get; set; }
-        public Fighter FighterB { get; set; }
+        public FightStats FightStats { get; set; } = new FightStats();
+        public Fighter FighterA { get; set; } = new Fighter();
+        public Fighter FighterB { get; set; } = new Fighter();
+        public List<WebHitData> WebHitDatas { get; set; } = [];
+
+        internal List<WebHitData> GetRemainingWebActions()
+        {
+            List<WebHitData> result = [.. WebHitDatas.Where(hit => !hit.Displayed)];
+            WebHitDatas.ForEach(hit => hit.Displayed = true);
+            return result;
+        }
 
         internal int GetRemainingWebTime(Admin.Settings.SettingsItem globalSettingsItems)
         {

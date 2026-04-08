@@ -13,16 +13,16 @@ namespace Bastocos.Business.Database
 
         public static bool DatabaseExist()
         {
-            return File.Exists(GlobalVar.ConnectionString);
+            return File.Exists(GlobalVar.DatabaseFile);
         }
 
         public static void CreateDatabaseFile()
         {
             // Crée le fichier si inexistant
-            if (!File.Exists(GlobalVar.ConnectionString))
-                File.Create(GlobalVar.ConnectionString).Close();
+            if (!File.Exists(GlobalVar.DatabaseFile))
+                File.Create(GlobalVar.DatabaseFile).Close();
 
-            using (var connection = new SqliteConnection($"Data Source={GlobalVar.ConnectionString};"))
+            using (var connection = new SqliteConnection($"{GlobalVar.ConnectionString}"))
             {
                 connection.Open();
 
@@ -39,20 +39,25 @@ namespace Bastocos.Business.Database
         {
             var item = new VersionsItem();
 
-            using (var connection = new SqliteConnection($"Data Source={GlobalVar.ConnectionString};"))
+            using (var connection = new SqliteConnection($"{GlobalVar.ConnectionString}"))
             {
                 connection.Open();
 
-                string query = "SELECT DatabaseVersion, DatabaseLastUpdate, AppVersion FROM DataSettings LIMIT 1;";
+                string query = "SELECT Info, Data FROM DataSettings;";
 
                 using (var command = new SqliteCommand(query, connection))
                 using (var reader = command.ExecuteReader())
                 {
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        item.DatabaseVersion = reader.GetInt32(0);
-                        item.LastDatabaseUpdate = reader.GetDateTime(1);
-                        item.AppVersion = reader.GetInt32(2);
+                        string info = reader.GetString(0);
+                        int data = reader.GetInt32(1);
+
+                        if (info == "DbVersion")
+                            item.DatabaseVersion = data;
+
+                        if (info == "AppVersion")
+                            item.AppVersion = data;
                     }
                 }
             }
@@ -91,7 +96,7 @@ namespace Bastocos.Business.Database
                 string sql = File.ReadAllText(file);
 
                 // 4. Exécuter le script
-                using (var connection = new SqliteConnection($"Data Source={GlobalVar.ConnectionString};"))
+                using (var connection = new SqliteConnection($"{GlobalVar.ConnectionString}"))
                 {
                     connection.Open();
 

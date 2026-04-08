@@ -1,4 +1,3 @@
-﻿using Bastocos.Business.Account;
 using Bastocos.Business.Match;
 using Bastocos.Entity.Admin;
 using Bastocos.Entity.Admin.Settings;
@@ -6,19 +5,14 @@ using Bastocos.Entity.Match.Request;
 using Bastocos.Entity.User;
 using Bastocos.Entity.Web;
 using Bastocos.Tools.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bastocos.Controller.Match
 {
     internal class MatchController
     {
-        private WebRequestTreatment _webRequestTreatment = new WebRequestTreatment();
-        private MatchBusiness _match = new MatchBusiness();
+        private readonly WebRequestTreatment _webRequestTreatment = new();
+        private readonly MatchBusiness _match = new();
 
         internal async Task<string> HandleAsync(HttpListenerContext context, EnvItem GlobalEnvironmentItem, SettingsItem GlobalSettingsItems)
         {
@@ -27,35 +21,50 @@ namespace Bastocos.Controller.Match
             {
                 case "/match/startassault":
                     FightAssaultRequest assaultRequest = await _webRequestTreatment.ParseRequestBody<FightAssaultRequest>(context.Request);
-                    _match.InitializeAssault(GlobalEnvironmentItem, assaultRequest);
-                    response = "Match added in queue";
+                    response = _match.InitializeAssault(GlobalEnvironmentItem, assaultRequest);
+                    break;
+
+                case "/match/loot":
+                    UserItem userWhoLoot = await _webRequestTreatment.ParseRequestBody<UserItem>(context.Request);
+                    response = _match.SearchForLoot(GlobalEnvironmentItem, GlobalSettingsItems, userWhoLoot);
+                    break;
+
+                case "/match/attack":
+                    UserItem userWhoAttack = await _webRequestTreatment.ParseRequestBody<UserItem>(context.Request);
+                    response = _match.Attack(GlobalEnvironmentItem, GlobalSettingsItems, userWhoAttack);
                     break;
 
                 case "/match/getmatchinfo":
-                    response = new MatchWebData
+                    response = GlobalEnvironmentItem.CurrentMatch is null ? "{}" : new MatchWebData
                     {
                         // global data
                         HPMax = GlobalEnvironmentItem.CurrentMatch.FighterA.HP_Max,
                         RemainingTimePercent = GlobalEnvironmentItem.CurrentMatch.GetRemainingWebTime(GlobalSettingsItems),
+                        ImageCenter = "https://upload.wikimedia.org/wikipedia/commons/7/70/Street_Fighter_VS_logo.png",
+                        WebHitDatas = GlobalEnvironmentItem.CurrentMatch.GetRemainingWebActions(),
 
                         // player A
                         PseudoA = GlobalEnvironmentItem.CurrentMatch.FighterA.User.Name,
-                        PictureA = "https://images2.minutemediacdn.com/image/upload/c_crop,x_904,y_171,w_2195,h_1234/c_fill,w_1440,ar_1440:810,f_auto,q_auto,g_auto/images/ImagnImages/mmsport/si/01jab1dnay1j8zhecp44.jpg",
+                        PictureA = GlobalEnvironmentItem.CurrentMatch.FighterA.User.Avatar,
                         HPA = GlobalEnvironmentItem.CurrentMatch.FighterA.HP_Current,
                         WeaponA = GlobalEnvironmentItem.CurrentMatch.FighterA.WeaponItem.Image,
                         ArmorA = GlobalEnvironmentItem.CurrentMatch.FighterA.ArmorItem.Image,
+                        ArmorAValue = GlobalEnvironmentItem.CurrentMatch.FighterA.ArmorItem.Defense,
+                        WeaponAValue = GlobalEnvironmentItem.CurrentMatch.FighterA.WeaponItem.Attack,
 
-                        // player b
+                        // player B
                         PseudoB = GlobalEnvironmentItem.CurrentMatch.FighterB.User.Name,
-                        PictureB = "https://tubbz.com/cdn/shop/files/Steve_Minecraft_FETUBBZ_PL_1.jpg",
+                        PictureB = GlobalEnvironmentItem.CurrentMatch.FighterB.User.Avatar,
                         HPB = GlobalEnvironmentItem.CurrentMatch.FighterB.HP_Current,
                         WeaponB = GlobalEnvironmentItem.CurrentMatch.FighterB.WeaponItem.Image,
                         ArmorB = GlobalEnvironmentItem.CurrentMatch.FighterB.ArmorItem.Image,
+                        ArmorBValue = GlobalEnvironmentItem.CurrentMatch.FighterB.ArmorItem.Defense,
+                        WeaponBValue = GlobalEnvironmentItem.CurrentMatch.FighterB.WeaponItem.Attack,
                     }.ToJson();
+                    Console.WriteLine(response);
 
                     break;
             }
-
             return response;
         }
     }

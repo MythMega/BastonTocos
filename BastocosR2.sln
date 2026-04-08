@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36915.13 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BastocosR2", "BastocosR2.csproj", "{E33F21BE-7AD2-4A71-8752-AC3AF5FB74B8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E33F21BE-7AD2-4A71-8752-AC3AF5FB74B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E33F21BE-7AD2-4A71-8752-AC3AF5FB74B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E33F21BE-7AD2-4A71-8752-AC3AF5FB74B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E33F21BE-7AD2-4A71-8752-AC3AF5FB74B8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7D17FC2F-D1C7-4D1B-B879-95A8481C66D2}
+	EndGlobalSection
+EndGlobal

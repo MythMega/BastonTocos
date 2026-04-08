@@ -9,6 +9,7 @@ namespace Bastocos.Tools
 {
     public static class GlobalVar
     {
-        public const string ConnectionString = "./_database.sqlite";
+        public const string ConnectionString = "Data Source=./_database.sqlite;";
+        public const string DatabaseFile = "./_database.sqlite";
     }
 }

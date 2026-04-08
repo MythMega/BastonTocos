@@ -1,4 +1,4 @@
-﻿using Bastocos.Entity.User;
+using Bastocos.Entity.User;
 using Bastocos.Tools;
 using Microsoft.Data.Sqlite;
 using System;
@@ -9,7 +9,8 @@ namespace Bastocos.Business.Database.User
     {
         private SqliteConnection GetConnection()
         {
-            var conn = new SqliteConnection(GlobalVar.ConnectionString);
+            string a = GlobalVar.ConnectionString;
+            var conn = new SqliteConnection(a);
             conn.Open();
             return conn;
         }
@@ -22,12 +23,13 @@ namespace Bastocos.Business.Database.User
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                INSERT INTO User (ID, Username)
-                VALUES (@id, @username);
+                INSERT INTO User (ID, Username, Picture)
+                VALUES (@id, @username, @avatar);
             ";
 
                     cmd.Parameters.AddWithValue("@id", account.Id);
                     cmd.Parameters.AddWithValue("@username", account.Name);
+                    cmd.Parameters.AddWithValue("@avatar", account.Avatar);
 
                     cmd.ExecuteNonQuery();
                 }
@@ -65,7 +67,7 @@ namespace Bastocos.Business.Database.User
             using (var cmd = conn.CreateCommand())
             {
                 cmd.CommandText = @"
-                    SELECT ID, Username, FirstLogin, LastLogin
+                    SELECT ID, Username, Picture, FirstLogin, LastLogin
                     FROM User
                     WHERE Username = @username
                     LIMIT 1;
@@ -82,10 +84,11 @@ namespace Bastocos.Business.Database.User
                     {
                         Id = reader.GetInt32(0),
                         Name = reader.GetString(1),
+                        Avatar = reader.GetString(2),
                         LoginStatsItem = new LoginStatsItem
                         {
-                            FirstLogin = reader.GetDateTime(2),
-                            LastLogin = reader.GetDateTime(3),
+                            FirstLogin = reader.GetDateTime(3),
+                            LastLogin = reader.GetDateTime(4),
                         }
                     };
                 }
@@ -96,13 +99,13 @@ namespace Bastocos.Business.Database.User
         {
             using (var conn = GetConnection())
             {
-                UserItem user = null;
+                UserItem? user = null;
 
                 // --- 1) Récupération des infos User ---
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                SELECT ID, Username, FirstLogin, LastLogin
+                SELECT ID, Username, Picture, FirstLogin, LastLogin
                 FROM User
                 WHERE ID = @id
                 LIMIT 1;
@@ -119,10 +122,11 @@ namespace Bastocos.Business.Database.User
                         {
                             Id = reader.GetInt32(0),
                             Name = reader.GetString(1),
+                            Avatar = reader.GetString(2),
                             LoginStatsItem = new LoginStatsItem
                             {
-                                FirstLogin = reader.GetDateTime(2),
-                                LastLogin = reader.GetDateTime(3)
+                                FirstLogin = reader.GetDateTime(3),
+                                LastLogin = reader.GetDateTime(4)
                             }
                         };
                     }
@@ -292,7 +296,7 @@ namespace Bastocos.Business.Database.User
                     cmd.Parameters.AddWithValue("@MaxDamageDuel", s.MaxDamageDuel);
                     cmd.Parameters.AddWithValue("@MaxDamageAssault", s.MaxDamageAssault);
                     cmd.Parameters.AddWithValue("@TotalDamage", s.TotalDamage);
-                    cmd.Parameters.AddWithValue("@FirstDuelDate", (object)s.FirstDuelDate ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@FirstDuelDate", s.FirstDuelDate as object ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@PurchaseCount", s.PurchaseCount);
                     cmd.Parameters.AddWithValue("@MoneySpent", s.MoneySpent);
                     cmd.Parameters.AddWithValue("@SaleCount", s.SaleCount);
@@ -316,6 +320,33 @@ namespace Bastocos.Business.Database.User
                     cmd.ExecuteNonQuery();
                 }
             }
+        }
+
+        internal string UpdateAccount(UserItem user)
+        {
+            using (var conn = GetConnection())
+            {
+                // --- 1) Update User ---
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                UPDATE User
+                SET Username = @username,
+                    LastLogin = @lastLogin,
+                    Picture = @avatar
+                WHERE ID = @id;
+            ";
+
+                    cmd.Parameters.AddWithValue("@id", user.Id);
+                    cmd.Parameters.AddWithValue("@username", user.Name);
+                    cmd.Parameters.AddWithValue("@avatar", user.Avatar);
+                    cmd.Parameters.AddWithValue("@lastLogin", user.LoginStatsItem.LastLogin);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            return @$"compte ""{user.Name}"" mis a jour";
         }
     }
 }
