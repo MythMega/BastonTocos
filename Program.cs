@@ -1,5 +1,7 @@
 using Bastocos.Business.Database;
 using Bastocos.Business.Match;
+using Bastocos.Controller.Admin;
+using Bastocos.Controller.Export;
 using Bastocos.Controller.Match;
 using Bastocos.Controller.User;
 using Bastocos.Entity.Admin;
@@ -20,8 +22,9 @@ namespace Bastocos
         private static async Task Main(string[] args)
         {
             Console.WriteLine("Chargement des données.");
-            EnvItem GlobalEnvironmentItem = new EnvItem();
+            EnvItem GlobalEnvironmentItem = new();
             GlobalEnvironmentItem.LoadAllData();
+            GlobalEnvironmentItem.ExportWebData();
             Console.WriteLine("Données initialisées.");
 
             Console.WriteLine("Chargement des paramètres.");
@@ -52,6 +55,8 @@ namespace Bastocos
 
             var userController = new UserController();
             var assautController = new MatchController();
+            var adminController = new AdminController();
+            var exportController = new ExportController();
 
             #endregion Controllers
 
@@ -94,7 +99,16 @@ namespace Bastocos
                         GlobalEnvironmentItem.LastMatchEnd = DateTime.Now;
                     }
                 }
-                _ = Task.Run(() => HandleRequest(context, userController, assautController, GlobalEnvironmentItem, GlobalSettingsItems));
+                _ = Task.Run(() => HandleRequest(context,
+
+                    // controlleurs
+                    userController,
+                    assautController,
+                    adminController,
+                    exportController,
+
+                    // data env & settings
+                    GlobalEnvironmentItem, GlobalSettingsItems));
             }
         }
 
@@ -105,6 +119,8 @@ namespace Bastocos
             // Controllers
             UserController userCtrl,
             MatchController matchCtrl,
+            AdminController adminCtrl,
+            ExportController exportController,
 
             // Data
             EnvItem GlobalEnvironmentItem,
@@ -125,6 +141,14 @@ namespace Bastocos
             else if (path.StartsWith("/match"))
             {
                 response = await matchCtrl.HandleAsync(context, GlobalEnvironmentItem, GlobalSettingsItems);
+            }
+            else if (path.StartsWith("/admin"))
+            {
+                response = await adminCtrl.HandleAsync(context, GlobalEnvironmentItem, GlobalSettingsItems);
+            }
+            else if (path.StartsWith("/export"))
+            {
+                response = await exportController.HandleAsync(context, GlobalEnvironmentItem, GlobalSettingsItems);
             }
             else
             {

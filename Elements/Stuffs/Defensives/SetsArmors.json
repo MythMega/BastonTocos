@@ -1,7 +1,7 @@
 [
   {
     "Name": "Armure en Diam's",
-    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/armor/diamondarmor.png",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/items/diamondarmor.png",
     "Rarity": "Rare",
     "Enabled": true,
     "Description": "Une armure brillante et solide, taillée dans le même matériau que l'épée en Diam's.",
@@ -15,7 +15,7 @@
   },
   {
     "Name": "Armure du Vent",
-    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/armor/windarmor.png",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/items/windarmor.png",
     "Rarity": "Rare",
     "Enabled": true,
     "Description": "Légére comme l'air, elle accompagne parfaitement le Sabre du Vent.",
@@ -29,7 +29,7 @@
   },
   {
     "Name": "Blouse du Docteur Fou",
-    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/armor/maddoctorcoat.png",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/items/maddoctorcoat.png",
     "Rarity": "Rare",
     "Enabled": true,
     "Description": "Une blouse tachée de substances douteuses, imprégnée d'une énergie malsaine.",

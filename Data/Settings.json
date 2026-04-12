@@ -4,20 +4,24 @@
   "ServerPort": 5042,
   "MatchSettings": {
     "DelayBetweenTwoMatch": 1,
+    "MoneyMatchSetting": {
+      "RewardWinner": 15,
+      "RewardLooser": 5
+    },
     "DefaultsMatchSettings": {
-      "DefaultHP": 1000,
-      "DefaultDamage": 10,
+      "DefaultHP": 75,
+      "DefaultDamage": 1,
       "DefaultArmor": 0,
       "MissChancePercentage": 0,
       "CritChancePercentage": 0,
       "CancelMatchForAFKTimeMinute": 5,
-      "MaxDuration": -1
+      "MaxDuration": 5
     }
   },
   "LootRatesPercentages": {
-    "Trash": 78,
-    "Equipments": 20,
-    "Cards": 2
+    "Trash": 70,
+    "Equipments": 29,
+    "Cards": 1
   },
   "ModifierRate": {
     "Common": 0,

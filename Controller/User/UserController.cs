@@ -23,6 +23,15 @@ namespace Bastocos.Controller.User
                     response = _accountManagement.CreateAccount(userItem, GlobalEnvironmentItem);
                     GlobalEnvironmentItem.RefreshLastActivity(userItem);
                     break;
+
+                case "/user/ready":
+                    UserItem userToBeReady = await _webRequestTreatment.ParseRequestBody<UserItem>(context.Request);
+                    GlobalEnvironmentItem.RefreshLastActivity(userToBeReady);
+                    response = "Tu as été ajouté comme actif pendant 45min";
+                    break;
+
+                case "/user/sellgoods/":
+                    break;
             }
             return response;
         }

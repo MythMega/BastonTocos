@@ -1,7 +1,7 @@
 [
   {
     "Name": "Épée en Diam's",
-    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/weapon/diamondword.png",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/items/diamondword.png",
     "Rarity": "Rare",
     "Enabled": true,
     "Description": "Une épée qui fait autant de dommage qu'elle n'a de pixels.",
@@ -15,7 +15,7 @@
   },
   {
     "Name": "Sabre du Vent",
-    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/weapon/windsabre.png",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/items/windsabre.png",
     "Rarity": "Rare",
     "Enabled": true,
     "Description": "Une lame légère qui semble vibrer à chaque mouvement.",
@@ -29,7 +29,7 @@
   },
   {
     "Name": "Seringue de Docteur Fou",
-    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/weapon/syringe.png",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/items/syringe.png",
     "Rarity": "Rare",
     "Enabled": true,
     "Description": "Ponctionne la vie de l'adversaire pour le vaincre.",

@@ -7,12 +7,15 @@ using Bastocos.Entity.Stuffs.Equipments.Armors;
 using Bastocos.Entity.Stuffs.Equipments.Weapons;
 using Bastocos.Entity.Stuffs.Trashs;
 using Bastocos.Entity.User;
+using BastocosR2.Business.Web;
+using BastocosR2.Tools.Json;
 using System.Text.Json;
 
 namespace Bastocos.Entity.Admin
 {
     public class EnvItem
     {
+        private readonly WebExporterBusiness _webExporterBusiness = new WebExporterBusiness();
         public List<CardItem> CardItems { get; set; } = new List<CardItem>();
 
         public ItemSet Items { get; set; } = new ItemSet();
@@ -44,17 +47,27 @@ namespace Bastocos.Entity.Admin
             }
         }
 
+        internal bool IsStillActive(UserItem user)
+        {
+            int index = Users.FindIndex(u => u.Utilisateur.Id == user.Id);
+
+            if (index < 0)
+                return false;
+
+            return Users[index].LastActivity.AddMinutes(45) > DateTime.Now;
+        }
+
         public void LoadAllData()
         {
             LoadOneData("CARD");
             LoadOneData("TRASH");
             LoadOneData("ARMOR");
             LoadOneData("WEAPON");
-            Items.ArmorItems.ForEach(a => Console.WriteLine(a.Image.Split('/').Last()));
-            Items.WeaponItems.ForEach(a => Console.WriteLine(a.Image.Split('/').Last()));
-            Console.WriteLine("////////////////");
-            Items.Trashitems.ForEach(a => Console.WriteLine(a.Name));
-            CardItems.ForEach(a => Console.WriteLine(a.Name));
+            //Items.ArmorItems.ForEach(a => Console.WriteLine(a.Image.Split('/').Last()));
+            //Items.WeaponItems.ForEach(a => Console.WriteLine(a.Image.Split('/').Last()));
+            //Console.WriteLine("////////////////");
+            //Items.Trashitems.ForEach(a => Console.WriteLine(a.Name));
+            //CardItems.ForEach(a => Console.WriteLine(a.Name));
         }
 
         public void LoadOneData(string type)
@@ -167,6 +180,22 @@ namespace Bastocos.Entity.Admin
             {
                 Console.WriteLine("❌ Erreur critique dans LoadOneItem (" + item[type] + ") : " + ex.Message);
             }
+        }
+
+        internal void ExportWebData()
+        {
+            WebFullElementData datas = new WebFullElementData
+            {
+                Armors = this.Items.ArmorItems,
+                Weapons = this.Items.WeaponItems,
+                Trashs = this.Items.Trashitems,
+                Cards = this.CardItems,
+            };
+            _webExporterBusiness.ExportFileAbsolute(JsonSerializer.Serialize(this), Path.Combine(Directory.GetCurrentDirectory(), "Web", "Data"), "fulldata.json");
+            _webExporterBusiness.ExportFileAbsolute(JsonSerializer.Serialize(datas.Armors), Path.Combine(Directory.GetCurrentDirectory(), "Web", "Data"), "armors.json");
+            _webExporterBusiness.ExportFileAbsolute(JsonSerializer.Serialize(datas.Weapons), Path.Combine(Directory.GetCurrentDirectory(), "Web", "Data"), "weapons.json");
+            _webExporterBusiness.ExportFileAbsolute(JsonSerializer.Serialize(datas.Cards), Path.Combine(Directory.GetCurrentDirectory(), "Web", "Data"), "cards.json");
+            _webExporterBusiness.ExportFileAbsolute(JsonSerializer.Serialize(datas.Trashs), Path.Combine(Directory.GetCurrentDirectory(), "Web", "Data"), "trashs.json");
         }
     }
 }

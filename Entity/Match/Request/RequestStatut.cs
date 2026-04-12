@@ -9,6 +9,7 @@ namespace Bastocos.Entity.Match.Request
         Pause = 4,
         Finnished = 5,
         Expired = 6,
-        Finishing = 7
+        Finishing = 7,
+        Canceled_By_Admin = 8,
     }
 }

@@ -14,6 +14,8 @@ namespace Bastocos.Entity.Match.Assault
         public Fighter FighterA { get; set; } = new Fighter();
         public Fighter FighterB { get; set; } = new Fighter();
         public List<WebHitData> WebHitDatas { get; set; } = [];
+        public FightType MatchType { get; set; } = FightType.Assault;
+        public bool Finished { get; set; } = false;
 
         internal List<WebHitData> GetRemainingWebActions()
         {
@@ -31,19 +33,20 @@ namespace Bastocos.Entity.Match.Assault
 
             DateTime start = FightStats.StartTime;
             DateTime end = start.AddMinutes(maxDuration);
-
             DateTime now = DateTime.Now;
 
             double total = (end - start).TotalSeconds;
             double elapsed = (now - start).TotalSeconds;
 
-            double percent = (elapsed / total) * 100.0;
+            double percentElapsed = (elapsed / total) * 100.0;
 
-            // Clamp manuel
-            if (percent < 0) percent = 0;
-            if (percent > 100) percent = 100;
+            // Clamp
+            if (percentElapsed < 0) percentElapsed = 0;
+            if (percentElapsed > 100) percentElapsed = 100;
 
-            return (int)percent;
+            double percentRemaining = 100 - percentElapsed;
+
+            return (int)percentRemaining;
         }
     }
 }

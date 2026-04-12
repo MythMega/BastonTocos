@@ -1,3 +1,4 @@
+using Bastocos.Entity.Match.Assault;
 using Bastocos.Entity.User;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace Bastocos.Entity.Match.Request
     {
         public DateTime DateRequest { get; set; } = DateTime.Now;
         public RequestStatut RequestStatut { get; set; } = RequestStatut.Treatment_Request;
+        public FightType FightType { get; set; } = FightType.Assault;
         public UserItem UserItemA { get; set; } = new UserItem();
         public UserItem? UserItemB { get; set; }
 

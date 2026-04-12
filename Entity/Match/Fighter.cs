@@ -12,6 +12,7 @@ namespace Bastocos.Entity.Match
         public int HP_Max { get; set; }
         public ArmorItem ArmorItem { get; set; } = new ArmorItem();
         public WeaponItem WeaponItem { get; set; } = new WeaponItem();
+        public FighterStatistic FighterStatistic { get; set; } = new FighterStatistic();
 
         public void Damage(int damage)
         {

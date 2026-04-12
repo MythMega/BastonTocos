@@ -1,7 +1,7 @@
 [
   {
     "Name": "Master Sword",
-    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/weapon/mastersword.png",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/items/mastersword.png",
     "Rarity": "Epic",
     "Enabled": true,
     "Description": "Une épée promise à de grands héros.",
@@ -19,7 +19,7 @@
   },
   {
     "Name": "Bâton de bois",
-    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/weapon/stick.png",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/items/stick.png",
     "Rarity": "Common",
     "Enabled": true,
     "Description": "Un bâton. Ne vous fiez pas à son apparence, ça fait mal.",
@@ -38,7 +38,7 @@
   },
   {
     "Name": "Épée Rouillée",
-    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/weapon/rustysword.png",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/items/rustysword.png",
     "Rarity": "Common",
     "Enabled": true,
     "Description": "Une vieille épée rongée par le temps. Elle coupe encore, un peu.",
@@ -52,7 +52,7 @@
   },
   {
     "Name": "Dague du Sournois",
-    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/weapon/rogue_dagger.png",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/items/rogue_dagger.png",
     "Rarity": "Uncommon",
     "Enabled": true,
     "Description": "Une petite dague rapide, parfaite pour frapper avant d'être vu.",
@@ -66,7 +66,7 @@
   },
   {
     "Name": "Hache de Bûcheron",
-    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/weapon/woodaxe.png",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/items/woodaxe.png",
     "Rarity": "Common",
     "Enabled": true,
     "Description": "Une hache lourde, conçue pour couper du bois... ou autre chose.",
@@ -80,7 +80,7 @@
   },
   {
     "Name": "Marteau de Mineur",
-    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/weapon/minerhammer.png",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/items/minerhammer.png",
     "Rarity": "Common",
     "Enabled": true,
     "Description": "Un outil robuste, détourné en arme improvisée.",
@@ -94,7 +94,7 @@
   },
   {
     "Name": "Lame Pixelisée",
-    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/weapon/pixelsword.png",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/items/pixelsword.png",
     "Rarity": "Uncommon",
     "Enabled": true,
     "Description": "Une épée étrange, comme sortie d'un vieux jeu 8-bits.",
@@ -108,7 +108,7 @@
   },
   {
     "Name": "Arc du Chasseur",
-    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/weapon/hunterbow.png",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/items/hunterbow.png",
     "Rarity": "Uncommon",
     "Enabled": true,
     "Description": "Un arc simple mais fiable, utilisé par les chasseurs locaux.",
@@ -122,7 +122,7 @@
   },
   {
     "Name": "Arbalète Légère",
-    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/weapon/lightcrossbow.png",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/items/lightcrossbow.png",
     "Rarity": "Common",
     "Enabled": true,
     "Description": "Une arbalète facile à manier, mais peu puissante.",
@@ -136,7 +136,7 @@
   },
   {
     "Name": "Arbalète Renforcée",
-    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/weapon/heavycrossbow.png",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/items/heavycrossbow.png",
     "Rarity": "Uncommon",
     "Enabled": true,
     "Description": "Une version améliorée, capable de perforer des armures légères.",
@@ -150,7 +150,7 @@
   },
   {
     "Name": "Épée du Héros Déchu",
-    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/weapon/fallensword.png",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/items/fallensword.png",
     "Rarity": "Rare",
     "Enabled": true,
     "Description": "Une parodie d'une arme légendaire, fissurée mais encore dangereuse.",
@@ -164,7 +164,7 @@
   },
   {
     "Name": "Gantelet Runique",
-    "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/master/img/items/weapon/runegauntlet.png",
+    "Image": "https://raw.githubusercontent.com/MythMega/BastonTocos/refs/heads/master/Assets/items/runegauntlet.png",
     "Rarity": "Uncommon",
     "Enabled": true,
     "Description": "Un gantelet lourd gravé de runes anciennes.",
