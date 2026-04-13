@@ -3,6 +3,7 @@ using Bastocos.Entity.Admin;
 using Bastocos.Entity.Admin.Settings;
 using Bastocos.Entity.User;
 using Bastocos.Tools.Json;
+using BastocosR2.Business.User;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -12,6 +13,7 @@ namespace Bastocos.Controller.User
     {
         private readonly WebRequestTreatment _webRequestTreatment = new();
         private readonly AccountManagement _accountManagement = new();
+        private readonly UserBusiness _userBusiness = new UserBusiness();
 
         internal async Task<string> HandleAsync(HttpListenerContext context, EnvItem GlobalEnvironmentItem, SettingsItem GlobalSettingsItems)
         {
@@ -30,7 +32,13 @@ namespace Bastocos.Controller.User
                     response = "Tu as été ajouté comme actif pendant 45min";
                     break;
 
+                case "/user/getlistuseractive":
+                    response = GlobalEnvironmentItem.GetActivesUsers();
+                    break;
+
                 case "/user/sellgoods/":
+                    UserItem seller = await _webRequestTreatment.ParseRequestBody<UserItem>(context.Request);
+                    response = _userBusiness.SellGoods(seller, GlobalEnvironmentItem);
                     break;
             }
             return response;

@@ -1,10 +1,10 @@
 [
   {
-    "Name": "Bloc de béton",
+    "Name": "Une Fondation",
     "Image": "https://raw.githubusercontent.com/MythMega/BastocosData/refs/heads/master/Cards/betonblock.png",
     "Rarity": "Common",
     "Enabled": true,
-    "Description": "Un bloc de béton. Fallait en faire une carte pour que ça serve.",
+    "Description": "Vous savez, l'item que Zis n'utilise pas.",
     "SellValue": 2,
     "BuyValue": 600,
     "LootChance": 10
