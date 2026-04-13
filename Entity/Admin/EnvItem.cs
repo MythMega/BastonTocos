@@ -8,6 +8,7 @@ using Bastocos.Entity.Stuffs.Equipments.Weapons;
 using Bastocos.Entity.Stuffs.Trashs;
 using Bastocos.Entity.User;
 using BastocosR2.Business.Web;
+using BastocosR2.Entity.Web;
 using BastocosR2.Tools.Json;
 using System.Text.Json;
 
@@ -196,6 +197,21 @@ namespace Bastocos.Entity.Admin
             _webExporterBusiness.ExportFileAbsolute(JsonSerializer.Serialize(datas.Weapons), Path.Combine(Directory.GetCurrentDirectory(), "Web", "Data"), "weapons.json");
             _webExporterBusiness.ExportFileAbsolute(JsonSerializer.Serialize(datas.Cards), Path.Combine(Directory.GetCurrentDirectory(), "Web", "Data"), "cards.json");
             _webExporterBusiness.ExportFileAbsolute(JsonSerializer.Serialize(datas.Trashs), Path.Combine(Directory.GetCurrentDirectory(), "Web", "Data"), "trashs.json");
+        }
+
+        internal string GetActivesUsers()
+        {
+            List<ActiveUserWebData> datas = [];
+            Users.ForEach(a =>
+            {
+                datas.Add(new ActiveUserWebData
+                {
+                    DateInactive = a.LastActivity.AddMinutes(45),
+                    Id = a.Utilisateur.Id,
+                    Name = a.Utilisateur.Name,
+                });
+            });
+            return JsonSerializer.Serialize(datas);
         }
     }
 }

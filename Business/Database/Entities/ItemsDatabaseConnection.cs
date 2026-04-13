@@ -216,5 +216,35 @@ namespace BastocosR2.Business.Database.Entities
                 tran.Commit();
             }
         }
+
+        internal void RemoveEntries(List<ItemEntrie> entries)
+        {
+            if (entries == null || entries.Count == 0)
+                return;
+
+            using (var conn = GetConnection())
+            using (var tran = conn.BeginTransaction())
+            {
+                using (var cmdDelete = conn.CreateCommand())
+                {
+                    cmdDelete.CommandText = @"
+                DELETE FROM ItemsStorage
+                WHERE ID = @id AND Item = @item;
+            ";
+
+                    cmdDelete.Parameters.Add(new SqliteParameter("@id", System.Data.DbType.Int32));
+                    cmdDelete.Parameters.Add(new SqliteParameter("@item", System.Data.DbType.String));
+
+                    foreach (var e in entries)
+                    {
+                        cmdDelete.Parameters["@id"].Value = e.Id;
+                        cmdDelete.Parameters["@item"].Value = e.Item;
+                        cmdDelete.ExecuteNonQuery();
+                    }
+                }
+
+                tran.Commit();
+            }
+        }
     }
 }
