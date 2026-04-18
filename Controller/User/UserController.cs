@@ -32,6 +32,12 @@ namespace Bastocos.Controller.User
                     response = "Tu as été ajouté comme actif pendant 45min";
                     break;
 
+                case "/user/leave":
+                    UserItem userToLeave = await _webRequestTreatment.ParseRequestBody<UserItem>(context.Request);
+                    _userBusiness.LeaveActive(userToLeave, GlobalEnvironmentItem);
+                    response = "Tu n'est plus dans la liste.";
+                    break;
+
                 case "/user/getlistuseractive":
                     response = GlobalEnvironmentItem.GetActivesUsers();
                     break;

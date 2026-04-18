@@ -5,7 +5,10 @@ using Bastocos.Entity.Match.Request;
 using Bastocos.Entity.User;
 using Bastocos.Entity.Web;
 using Bastocos.Tools.Json;
+using BastocosR2.Entity.Web;
+using BastocosR2.Entity.Web.UserWebExportAlbum;
 using System.Net;
+using System.Text.Json;
 
 namespace Bastocos.Controller.Match
 {
@@ -24,6 +27,11 @@ namespace Bastocos.Controller.Match
                     response = _match.InitializeAssault(GlobalEnvironmentItem, assaultRequest);
                     break;
 
+                case "/match/requestDuel":
+                    FightDuelRequest duelRequest = await _webRequestTreatment.ParseRequestBody<FightDuelRequest>(context.Request);
+                    response = _match.InitializeDuelRequest(GlobalEnvironmentItem, duelRequest);
+                    break;
+
                 case "/match/loot":
                     UserItem userWhoLoot = await _webRequestTreatment.ParseRequestBody<UserItem>(context.Request);
                     response = _match.SearchForLoot(GlobalEnvironmentItem, GlobalSettingsItems, userWhoLoot);
@@ -32,6 +40,30 @@ namespace Bastocos.Controller.Match
                 case "/match/attack":
                     UserItem userWhoAttack = await _webRequestTreatment.ParseRequestBody<UserItem>(context.Request);
                     response = _match.Attack(GlobalEnvironmentItem, GlobalSettingsItems, userWhoAttack);
+                    break;
+
+                case "/match/getqueuepending":
+                    response = _match.GetQueue(GlobalEnvironmentItem);
+                    break;
+
+                case "/match/removequeueitem":
+                    WebQueueWebData queuedMatchCanceller = await _webRequestTreatment.ParseRequestBody<WebQueueWebData>(context.Request);
+                    response = _match.RemoveQueueItem(GlobalEnvironmentItem, queuedMatchCanceller);
+                    break;
+
+                case "/match/getcurrentmatch":
+                    response = GlobalEnvironmentItem.CurrentMatch is null ? "{}" : JsonSerializer.Serialize(new MatchWebReducedData
+                    {
+                        UsernameA = GlobalEnvironmentItem.CurrentMatch.FighterA.User.Name,
+                        UsernameB = GlobalEnvironmentItem.CurrentMatch.FighterB.User.Name,
+                        HPA = GlobalEnvironmentItem.CurrentMatch.FighterA.HP_Current,
+                        HPB = GlobalEnvironmentItem.CurrentMatch.FighterB.HP_Current,
+                        Statut = GlobalEnvironmentItem.CurrentMatch.Finished ? "Terminé" : "En cours"
+                    });
+                    break;
+
+                case "/match/healplayer":
+
                     break;
 
                 case "/match/getmatchinfo":

@@ -4,6 +4,7 @@ using Bastocos.Entity.Stuffs.Trashs;
 using Bastocos.Entity.User;
 using BastocosR2.Business.Database.Entities;
 using BastocosR2.Entity.Database;
+using BastocosR2.Entity.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,18 @@ namespace BastocosR2.Business.User
 
             result = count > 0 ? $"{FullUser.Name} a vendu {count} items pour {countMoney}." : $"{FullUser.Name} n'a rien a vendre.";
             return result;
+        }
+
+        public void LeaveActive(UserItem leave, EnvItem env)
+        {
+            LeaveActiveId(new IdContainerItem { Id = leave.Id }, env);
+        }
+
+        public void LeaveActiveId(IdContainerItem idToSetInactive, EnvItem env)
+        {
+            var index = env.Users.FindIndex(u => u.Utilisateur.Id == idToSetInactive.Id);
+            if (index >= 0)
+                env.Users.RemoveAt(index);
         }
     }
 }

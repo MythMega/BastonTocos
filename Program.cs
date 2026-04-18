@@ -6,12 +6,8 @@ using Bastocos.Controller.Match;
 using Bastocos.Controller.User;
 using Bastocos.Entity.Admin;
 using Bastocos.Entity.Admin.Settings;
-using System;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Bastocos
 {
@@ -68,6 +64,10 @@ namespace Bastocos
                 var response = context.Response;
                 if (request.HttpMethod == "OPTIONS")
                 {
+                    response.AddHeader("Access-Control-Allow-Origin", "*");
+                    response.AddHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+                    response.AddHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
                     response.StatusCode = 200;
                     response.OutputStream.Close();
                     continue;

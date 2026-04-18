@@ -33,6 +33,9 @@ namespace Bastocos.Entity.Admin
 
         public Random RandomGenerator { get; set; } = new Random();
 
+        public int SessionCommitCount { get; set; } = 1;
+        public DateTime SessionStartDate { get; set; } = DateTime.Now;
+
         public void RefreshLastActivity(UserItem user)
         {
             int index = Users.FindIndex(u => u.Utilisateur.Id == user.Id);

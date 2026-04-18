@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,6 +16,7 @@ namespace Bastocos.Tools.Json
             using (var reader = new StreamReader(request.InputStream, request.ContentEncoding))
             {
                 var body = reader.ReadToEnd();
+                Console.WriteLine(body);
                 var result = JsonSerializer.Deserialize<T>(body);
                 return Task.FromResult(result);
             }

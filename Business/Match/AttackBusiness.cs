@@ -62,7 +62,7 @@ namespace Bastocos.Business.Match
             {
                 fulldamage += (int)Math.Round(blockedDamageValues, 0);
             }
-            int damageDone = Math.Max(fulldamage, 0);
+            int damageDone = Math.Max(fulldamage, 1);
 
             // Applique les dégâts
             defenderFighter.HP_Current -= damageDone;

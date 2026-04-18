@@ -79,7 +79,8 @@ namespace BastocosR2.Business.Web
                         Name = item.Item,
                         Count = item.Count,
                         Description = corresp.Description,
-                        Image = corresp.Image
+                        Image = corresp.Image,
+                        Defense = corresp.Defense
                     });
                 }
             }
@@ -99,7 +100,8 @@ namespace BastocosR2.Business.Web
                         Name = item.Item,
                         Count = item.Count,
                         Description = corresp.Description,
-                        Image = corresp.Image
+                        Image = corresp.Image,
+                        Attack = corresp.Attack
                     });
                 }
             }

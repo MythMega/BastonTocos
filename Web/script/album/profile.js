@@ -176,6 +176,7 @@
     document.title = `Bastocos — Profil de ${user.name}`;
 
     sectionProfile.innerHTML = `
+      <div class="profile-wrap">
       <!-- ── En-tête profil ──────────────────────────────── -->
       <div class="profile-header">
         <img
@@ -210,6 +211,7 @@
         <div class="tab-panel"        id="tab-weapons" role="tabpanel"></div>
         <div class="tab-panel"        id="tab-trash"   role="tabpanel"></div>
         <div class="tab-panel"        id="tab-stats"   role="tabpanel"></div>
+      </div>
       </div>`;
 
     // Remplissage des onglets

@@ -8,11 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Web\UsersData\**" />
+    <EmbeddedResource Remove="Web\UsersData\**" />
+    <None Remove="Web\UsersData\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Elements\" />
+    <Folder Include="Admin\" />
     <Folder Include="SQL\" />
     <Folder Include="Overlays\" />
-    <Folder Include="Web\UsersData\" />
+    <Folder Include="Web\Data\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Admin\Management.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Settings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -93,6 +93,17 @@
   }
 
   /**
+   * Redirige vers la page profil du joueur.
+   * @param {string} name
+   */
+  function goToProfile(name) {
+    console.log(`[album/ui] Redirection vers le profil : "${name}"`);
+    msg.className = 'search-msg ok';
+    msg.textContent = `Chargement du profil de ${name}...`;
+    window.location.assign(`album.html?Profile=${encodeURIComponent(name)}`);
+  }
+
+  /**
    * Affiche un message d'erreur joueur introuvable.
    * @param {string} query
    */
@@ -102,21 +113,46 @@
     msg.textContent = `⚠ Aucun joueur nommé « ${query} » n'a été trouvé. Une mise à jour est peut-être en cours.`;
   }
 
+  /**
+   * Vérifie l'existence d'un profil en testant UsersData/<pseudo>.json.
+   * @param {string} name
+   * @returns {Promise<boolean>}
+   */
+  async function userExistsByProfileFile(name) {
+    try {
+      const response = await fetch(`UsersData/${encodeURIComponent(name)}.json`, { cache: 'no-store' });
+      if (response.status === 404) return false;
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return true;
+    } catch (err) {
+      console.error('[album/ui] Erreur de validation profil :', err);
+      return false;
+    }
+  }
+
   /** Valide la saisie courante et met à jour l'état du message. */
-  function validateInput() {
+  async function validateInput() {
     const q = input.value.trim();
-    if (!q) return;
+    if (!q) return null;
+
     const exact = users.find(u => u.toLowerCase() === q.toLowerCase());
     if (exact) {
       selectUser(exact);
+      return exact;
+    }
+
+    const exists = await userExistsByProfileFile(q);
+    if (exists) {
+      selectUser(q);
+      return q;
     } else {
       showNotFound(q);
+      return null;
     }
-    box.classList.remove('show');
   }
 
   // ── Bouton "Voir ma page" ─────────────────────────────────────────────────
-  document.getElementById('btn-voir-page').addEventListener('click', () => {
+  document.getElementById('btn-voir-page').addEventListener('click', async () => {
     const q = input.value.trim();
     if (!q) {
       msg.className   = 'search-msg err';
@@ -125,13 +161,9 @@
     }
 
     box.classList.remove('show');
-    const found = users.find(u => u.toLowerCase() === q.toLowerCase());
-    if (found) {
-      // Redirection vers la page profil via paramètre URL
-      console.log(`[album/ui] Redirection vers le profil : "${found}"`);
-      window.location.href = `album.html?Profile=${encodeURIComponent(found)}`;
-    } else {
-      showNotFound(q);
+    const validatedName = await validateInput();
+    if (validatedName) {
+      goToProfile(validatedName);
     }
   });
 
@@ -142,9 +174,31 @@
     renderSuggestions(input.value.trim());
   });
 
-  input.addEventListener('keydown', e => {
+  input.addEventListener('keydown', async e => {
     const items = box.querySelectorAll('li');
-    if (!box.classList.contains('show') || items.length === 0) return;
+    const isBoxOpen = box.classList.contains('show') && items.length > 0;
+
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (isBoxOpen && hlIndex >= 0 && items[hlIndex]) {
+        const selectedName = items[hlIndex].textContent;
+        selectUser(selectedName);
+        goToProfile(selectedName);
+      } else {
+        const validatedName = await validateInput();
+        if (validatedName) {
+          goToProfile(validatedName);
+        }
+      }
+      return;
+    }
+
+    if (!isBoxOpen) {
+      if (e.key === 'Escape') {
+        box.classList.remove('show');
+      }
+      return;
+    }
 
     if (e.key === 'ArrowDown') {
       e.preventDefault();
@@ -154,13 +208,6 @@
       e.preventDefault();
       hlIndex = Math.max(hlIndex - 1, 0);
       items.forEach((el, i) => el.classList.toggle('hl', i === hlIndex));
-    } else if (e.key === 'Enter') {
-      e.preventDefault();
-      if (hlIndex >= 0 && items[hlIndex]) {
-        selectUser(items[hlIndex].textContent);
-      } else {
-        validateInput();
-      }
     } else if (e.key === 'Escape') {
       box.classList.remove('show');
     }
@@ -168,12 +215,6 @@
 
   input.addEventListener('blur', () => {
     setTimeout(() => box.classList.remove('show'), 150);
-  });
-
-  input.addEventListener('keyup', e => {
-    if (e.key === 'Enter' && box.querySelectorAll('.hl').length === 0) {
-      validateInput();
-    }
   });
 
 }());

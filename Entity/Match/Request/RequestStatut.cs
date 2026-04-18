@@ -11,5 +11,6 @@ namespace Bastocos.Entity.Match.Request
         Expired = 6,
         Finishing = 7,
         Canceled_By_Admin = 8,
+        Duel_Denied = 9,
     }
 }
